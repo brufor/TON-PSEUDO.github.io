@@ -28,87 +28,161 @@
         }
 
         /* =========================
+           VIDÉO DE FOND
+           ========================= */
+
+        .video-background {
+            position: fixed;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            object-position: center;
+
+            z-index: 0;
+
+            filter:
+                brightness(0.92)
+                contrast(1.08)
+                saturate(1.08);
+
+            transform: scale(1.01);
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.12),
+                    rgba(0, 0, 0, 0.42)
+                );
+
+            z-index: 1;
+
+            pointer-events: none;
+        }
+
+        /* =========================
            CURSEUR ÉPÉE
            ========================= */
 
-        .sword-cursor {
+        #sword-cursor {
             position: fixed;
-            width: 58px;
-            height: 58px;
+
             left: 0;
             top: 0;
-            z-index: 99999;
+
+            width: 70px;
+            height: 70px;
+
+            z-index: 999999;
+
             pointer-events: none;
-            transform: translate(-8px, -8px) rotate(-45deg);
+
+            transform:
+                translate(-12px, -12px)
+                rotate(-45deg);
+
             filter:
-                drop-shadow(0 0 5px rgba(255,255,255,0.8))
-                drop-shadow(0 0 14px rgba(120,180,255,0.45));
-            transition: filter 0.15s ease;
+                drop-shadow(0 0 4px white)
+                drop-shadow(0 0 10px #8ec5ff)
+                drop-shadow(0 0 20px #4da6ff);
         }
 
-        /* lame */
+        /* LAME */
+
         .sword-blade {
             position: absolute;
+
+            left: 31px;
+            top: 3px;
+
             width: 8px;
-            height: 42px;
-            left: 25px;
-            top: 2px;
+            height: 48px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #666,
+                    #ffffff,
+                    #dcecff,
+                    #777
+                );
+
+            clip-path: polygon(
+                20% 0%,
+                80% 0%,
+                100% 88%,
+                50% 100%,
+                0% 88%
+            );
+
+            border-radius: 3px;
+        }
+
+        /* REFLET DE LA LAME */
+
+        .sword-blade::after {
+            content: "";
+
+            position: absolute;
+
+            left: 2px;
+            top: 4px;
+
+            width: 2px;
+            height: 34px;
+
+            background: white;
+
+            opacity: 0.9;
+
+            transform: skewX(-10deg);
+        }
+
+        /* GARDE */
+
+        .sword-guard {
+            position: absolute;
+
+            left: 17px;
+            top: 44px;
+
+            width: 36px;
+            height: 6px;
+
+            border-radius: 8px;
+
             background:
                 linear-gradient(
                     90deg,
                     #555,
-                    #ffffff 35%,
-                    #d8e1ea 55%,
-                    #555
+                    #ffffff,
+                    #777
                 );
-            clip-path: polygon(
-                20% 0,
-                80% 0,
-                100% 82%,
-                50% 100%,
-                0 82%
-            );
-            border-radius: 2px;
-        }
 
-        /* reflet de la lame */
-        .sword-blade::after {
-            content: "";
-            position: absolute;
-            width: 2px;
-            height: 31px;
-            left: 3px;
-            top: 4px;
-            background: rgba(255,255,255,0.9);
-            transform: skewX(-12deg);
-        }
-
-        /* garde */
-        .sword-guard {
-            position: absolute;
-            width: 30px;
-            height: 5px;
-            left: 14px;
-            top: 39px;
-            border-radius: 5px;
-            background: linear-gradient(
-                90deg,
-                #666,
-                #fff,
-                #666
-            );
             box-shadow:
-                0 0 7px rgba(255,255,255,0.6);
+                0 0 8px rgba(255,255,255,0.8);
         }
 
-        /* poignée */
+        /* POIGNÉE */
+
         .sword-handle {
             position: absolute;
-            width: 7px;
-            height: 16px;
-            left: 25px;
-            top: 43px;
+
+            left: 31px;
+            top: 49px;
+
+            width: 8px;
+            height: 17px;
+
             border-radius: 3px;
+
             background:
                 repeating-linear-gradient(
                     135deg,
@@ -119,77 +193,67 @@
                 );
         }
 
-        /* pommeau */
+        /* POMMEAU */
+
         .sword-pommel {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            left: 23.5px;
-            top: 56px;
+
+            left: 29px;
+            top: 63px;
+
+            width: 12px;
+            height: 12px;
+
             border-radius: 50%;
-            background: #d8d8d8;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    white,
+                    #aaa 45%,
+                    #555
+                );
+
             box-shadow:
-                0 0 8px rgba(255,255,255,0.7);
+                0 0 8px white;
         }
 
-        /* petite traînée */
-        .sword-trail {
+        /* =========================
+           TRAÎNÉE DU CURSEUR
+           ========================= */
+
+        .cursor-trail {
             position: fixed;
-            width: 7px;
-            height: 7px;
+
+            width: 6px;
+            height: 6px;
+
             border-radius: 50%;
+
             background: white;
+
             pointer-events: none;
-            z-index: 99998;
-            opacity: 0;
+
+            z-index: 999998;
+
             box-shadow:
-                0 0 8px white,
-                0 0 18px rgba(120,180,255,0.8);
-            animation: trail 0.45s ease-out forwards;
+                0 0 7px white,
+                0 0 15px #65b5ff;
+
+            animation:
+                trailFade 0.45s linear forwards;
         }
 
-        @keyframes trail {
-            0% {
+        @keyframes trailFade {
+            from {
                 opacity: 0.8;
                 transform: scale(1);
             }
 
-            100% {
+            to {
                 opacity: 0;
-                transform: scale(0.1);
+                transform: scale(0);
             }
-        }
-
-        /* =========================
-           VIDEO
-           ========================= */
-
-        .video-background {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 0;
-            filter:
-                brightness(0.92)
-                contrast(1.08)
-                saturate(1.08);
-            transform: scale(1.01);
-        }
-
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background:
-                linear-gradient(
-                    to bottom,
-                    rgba(0,0,0,0.15),
-                    rgba(0,0,0,0.38)
-                );
-            z-index: 1;
-            pointer-events: none;
         }
 
         /* =========================
@@ -198,97 +262,166 @@
 
         .profil {
             position: relative;
+
             z-index: 2;
+
             width: min(92vw, 440px);
-            height: 100vh;
+            min-height: 100vh;
+
             margin: auto;
+
             display: flex;
             flex-direction: column;
+
             align-items: center;
             justify-content: center;
+
             text-align: center;
-            animation: apparition 0.9s ease;
+
+            animation:
+                apparition 0.9s ease;
         }
+
+        /* PHOTO */
 
         .photo-container {
             position: relative;
+
             width: 150px;
             height: 150px;
+
             margin-bottom: 22px;
         }
 
         .photo-container::before {
             content: "";
+
             position: absolute;
+
             inset: -22px;
+
             border-radius: 50%;
+
             background:
                 radial-gradient(
                     circle,
-                    rgba(255,255,255,0.32),
-                    transparent
+                    rgba(255,255,255,0.35),
+                    transparent 70%
                 );
+
             filter: blur(18px);
-            animation: halo 3s ease-in-out infinite;
+
+            animation:
+                halo 3s ease-in-out infinite;
         }
 
         .photo-profil {
             position: relative;
+
             width: 150px;
             height: 150px;
+
+            display: block;
+
             border-radius: 50%;
+
             object-fit: cover;
-            border: 3px solid rgba(255,255,255,0.95);
+
+            border:
+                3px solid rgba(255,255,255,0.95);
+
             box-shadow:
                 0 0 20px rgba(0,0,0,0.9),
                 0 0 45px rgba(255,255,255,0.18);
         }
 
+        /* NOM */
+
         h1 {
             margin: 0;
+
             font-size: 46px;
+
             font-weight: 700;
+
             letter-spacing: 3px;
+
             text-shadow:
                 0 0 14px rgba(255,255,255,0.25),
                 0 5px 25px rgba(0,0,0,1);
         }
 
+        /* STATUT */
+
         .activite {
             margin-top: 14px;
+
             display: flex;
             align-items: center;
+
             gap: 9px;
+
             font-size: 15px;
+
             font-weight: 700;
         }
 
         .point {
             width: 9px;
             height: 9px;
+
             border-radius: 50%;
+
             background: #777;
-            animation: pulse 1.7s ease-in-out infinite;
+
+            transition:
+                background 0.3s ease,
+                box-shadow 0.3s ease;
+
+            animation:
+                pulse 1.7s ease-in-out infinite;
         }
+
+        /* =========================
+           CARTE DISCORD
+           ========================= */
 
         .jeu-card {
             width: 100%;
+
             margin-top: 18px;
+
             padding: 14px;
+
             display: none;
+
             align-items: center;
+
             gap: 13px;
+
             text-align: left;
+
             border-radius: 17px;
-            background: rgba(12,12,12,0.58);
-            border: 1px solid rgba(255,255,255,0.14);
+
+            background:
+                rgba(12,12,12,0.58);
+
+            border:
+                1px solid rgba(255,255,255,0.14);
+
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+
             box-shadow:
                 0 15px 45px rgba(0,0,0,0.38),
                 inset 0 1px 0 rgba(255,255,255,0.07);
+
             opacity: 0;
-            transform: translateY(10px) scale(0.98);
+
+            transform:
+                translateY(10px)
+                scale(0.98);
+
             transition:
                 opacity 0.35s ease,
                 transform 0.35s ease;
@@ -296,57 +429,87 @@
 
         .jeu-card.visible {
             display: flex;
+
             opacity: 1;
-            transform: translateY(0) scale(1);
+
+            transform:
+                translateY(0)
+                scale(1);
         }
 
         .jeu-icone {
             width: 58px;
             height: 58px;
+
             flex-shrink: 0;
+
             border-radius: 13px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             font-size: 26px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.12);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.12);
         }
 
         .jeu-infos {
             min-width: 0;
+
             display: flex;
             flex-direction: column;
+
             gap: 4px;
         }
 
         .jeu-label {
             font-size: 10px;
+
             text-transform: uppercase;
+
             letter-spacing: 1.4px;
-            color: rgba(255,255,255,0.45);
+
+            color:
+                rgba(255,255,255,0.45);
+
             font-weight: 700;
         }
 
         .jeu-nom {
             font-size: 16px;
+
             font-weight: 700;
+
             white-space: nowrap;
+
             overflow: hidden;
+
             text-overflow: ellipsis;
         }
 
         .jeu-details {
             font-size: 13px;
-            color: rgba(255,255,255,0.72);
+
+            color:
+                rgba(255,255,255,0.72);
+
             white-space: nowrap;
+
             overflow: hidden;
+
             text-overflow: ellipsis;
         }
 
         .jeu-timing {
             font-size: 12px;
-            color: rgba(255,255,255,0.43);
+
+            color:
+                rgba(255,255,255,0.43);
         }
 
         /* =========================
@@ -355,18 +518,31 @@
 
         .sound-button {
             position: fixed;
+
             right: 25px;
             bottom: 25px;
+
             width: 58px;
             height: 58px;
-            border: 1px solid rgba(255,255,255,0.20);
+
+            border:
+                1px solid rgba(255,255,255,0.20);
+
             border-radius: 50%;
-            background: rgba(15,15,15,0.55);
+
+            background:
+                rgba(15,15,15,0.55);
+
             color: white;
+
             font-size: 23px;
+
             cursor: none;
+
             z-index: 10;
+
             backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
 
         /* =========================
@@ -376,12 +552,18 @@
         @keyframes apparition {
             from {
                 opacity: 0;
-                transform: translateY(25px) scale(0.96);
+
+                transform:
+                    translateY(25px)
+                    scale(0.96);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+
+                transform:
+                    translateY(0)
+                    scale(1);
             }
         }
 
@@ -407,14 +589,18 @@
             }
         }
 
-        /* Sur téléphone : vrai curseur tactile inutile */
+        /* =========================
+           MOBILE
+           ========================= */
+
         @media (max-width: 600px) {
 
             body {
                 cursor: auto;
             }
 
-            .sword-cursor {
+            #sword-cursor,
+            .cursor-trail {
                 display: none;
             }
 
@@ -432,10 +618,33 @@
                 font-size: 33px;
             }
 
+            .activite {
+                font-size: 14px;
+            }
+
+            .jeu-card {
+                padding: 12px;
+            }
+
+            .jeu-icone {
+                width: 48px;
+                height: 48px;
+            }
+
+            .jeu-nom {
+                font-size: 14px;
+            }
+
+            .jeu-details {
+                font-size: 12px;
+            }
+
             .sound-button {
                 cursor: pointer;
+
                 width: 52px;
                 height: 52px;
+
                 right: 18px;
                 bottom: 18px;
             }
@@ -445,18 +654,27 @@
 
 <body>
 
-    <!-- CURSEUR ÉPÉE -->
-    <div class="sword-cursor" id="swordCursor">
+    <!-- =========================
+         CURSEUR
+         ========================= -->
+
+    <div id="sword-cursor">
 
         <div class="sword-blade"></div>
+
         <div class="sword-guard"></div>
+
         <div class="sword-handle"></div>
+
         <div class="sword-pommel"></div>
 
     </div>
 
 
-    <!-- VIDÉO -->
+    <!-- =========================
+         VIDÉO
+         ========================= -->
+
     <video
         class="video-background"
         autoplay
@@ -465,7 +683,9 @@
         playsinline
         preload="auto">
 
-        <source src="clip.mp4" type="video/mp4">
+        <source
+            src="clip.mp4"
+            type="video/mp4">
 
     </video>
 
@@ -473,7 +693,10 @@
     <div class="overlay"></div>
 
 
-    <!-- PROFIL -->
+    <!-- =========================
+         PROFIL
+         ========================= -->
+
     <main class="profil">
 
         <div class="photo-container">
@@ -515,21 +738,25 @@
 
             </div>
 
+
             <div class="jeu-infos">
 
                 <div class="jeu-label">
                     ACTIVITÉ DISCORD
                 </div>
 
+
                 <div
                     class="jeu-nom"
                     id="jeuNom">
                 </div>
 
+
                 <div
                     class="jeu-details"
                     id="jeuDetails">
                 </div>
+
 
                 <div
                     class="jeu-timing"
@@ -543,10 +770,13 @@
     </main>
 
 
-    <!-- SON -->
+    <!-- =========================
+         BOUTON SON
+         ========================= -->
+
     <button
         class="sound-button"
-        onclick="toggleSound()"
+        id="soundButton"
         aria-label="Activer ou couper le son">
 
         🔇
@@ -561,7 +791,9 @@
            ========================= */
 
         const sword =
-            document.getElementById("swordCursor");
+            document.getElementById(
+                "sword-cursor"
+            );
 
 
         let sourisX = 0;
@@ -575,20 +807,23 @@
             "mousemove",
             function(event) {
 
-                sourisX = event.clientX;
-                sourisY = event.clientY;
+                sourisX =
+                    event.clientX;
+
+                sourisY =
+                    event.clientY;
 
             }
         );
 
 
-        function animerCurseur() {
+        function suivreSouris() {
 
             curseurX +=
-                (sourisX - curseurX) * 0.25;
+                (sourisX - curseurX) * 0.35;
 
             curseurY +=
-                (sourisY - curseurY) * 0.25;
+                (sourisY - curseurY) * 0.35;
 
 
             sword.style.left =
@@ -599,16 +834,16 @@
 
 
             requestAnimationFrame(
-                animerCurseur
+                suivreSouris
             );
 
         }
 
 
-        animerCurseur();
+        suivreSouris();
 
 
-        /* Petite traînée quand on bouge */
+        /* TRAÎNÉE */
 
         let dernierX = 0;
         let dernierY = 0;
@@ -625,16 +860,21 @@
                     );
 
 
-                if (distance > 18) {
+                if (distance > 25) {
 
                     const trail =
-                        document.createElement("div");
+                        document.createElement(
+                            "div"
+                        );
+
 
                     trail.className =
-                        "sword-trail";
+                        "cursor-trail";
+
 
                     trail.style.left =
                         event.clientX + "px";
+
 
                     trail.style.top =
                         event.clientY + "px";
@@ -646,7 +886,9 @@
 
 
                     setTimeout(
-                        () => trail.remove(),
+                        function() {
+                            trail.remove();
+                        },
                         450
                     );
 
@@ -667,24 +909,42 @@
            DISCORD / LANYARD
            ========================= */
 
+        /*
+           ⚠️ REMPLACE UNIQUEMENT
+           TON_ID_DISCORD PAR TON ID.
+        */
+
         const DISCORD_ID =
             "1303798212540239923";
 
 
         const couleurs = {
+
             online: "#00ff88",
+
             idle: "#ffaa00",
+
             dnd: "#ff4444",
+
             offline: "#777777"
+
         };
 
 
         const nomsStatut = {
+
             online: "EN LIGNE",
+
             idle: "ABSENT",
+
             dnd: "NE PAS DÉRANGER",
+
             offline: "HORS LIGNE"
+
         };
+
+
+        let debutActivite = null;
 
 
         async function chargerDiscord() {
@@ -693,7 +953,8 @@
 
                 const response =
                     await fetch(
-                        `https://api.lanyard.rest/v1/users/${DISCORD_ID}`
+                        "https://api.lanyard.rest/v1/users/"
+                        + DISCORD_ID
                     );
 
 
@@ -702,9 +963,11 @@
 
 
                 if (!result.success) {
+
                     throw new Error(
-                        "Discord indisponible"
+                        "Lanyard indisponible"
                     );
+
                 }
 
 
@@ -713,7 +976,8 @@
 
 
                 const statut =
-                    data.discord_status;
+                    data.discord_status ||
+                    "offline";
 
 
                 const couleur =
@@ -721,31 +985,38 @@
                     couleurs.offline;
 
 
-                document.getElementById(
-                    "statut"
-                ).textContent =
-                    nomsStatut[statut] ||
-                    "HORS LIGNE";
+                const statutElement =
+                    document.getElementById(
+                        "statut"
+                    );
 
 
-                document.getElementById(
-                    "statut"
-                ).style.color =
+                const point =
+                    document.getElementById(
+                        "point"
+                    );
+
+
+                statutElement.textContent =
+                    nomsStatut[statut];
+
+
+                statutElement.style.color =
                     couleur;
 
 
-                document.getElementById(
-                    "point"
-                ).style.background =
+                point.style.background =
                     couleur;
 
 
-                document.getElementById(
-                    "point"
-                ).style.boxShadow =
-                    `0 0 8px ${couleur},
-                     0 0 18px ${couleur}`;
+                point.style.boxShadow =
+                    "0 0 8px " +
+                    couleur +
+                    ", 0 0 18px " +
+                    couleur;
 
+
+                /* ACTIVITÉ */
 
                 const activites =
                     data.activities || [];
@@ -753,8 +1024,11 @@
 
                 const activite =
                     activites.find(
-                        activity =>
-                            activity.type === 0
+                        function(activity) {
+
+                            return activity.type === 0;
+
+                        }
                     );
 
 
@@ -769,6 +1043,9 @@
                     carte.classList.remove(
                         "visible"
                     );
+
+                    debutActivite =
+                        null;
 
                     return;
 
@@ -790,28 +1067,170 @@
                     "En cours";
 
 
+                if (
+                    activite.timestamps &&
+                    activite.timestamps.start
+                ) {
+
+                    debutActivite =
+                        activite.timestamps.start;
+
+                } else {
+
+                    debutActivite =
+                        null;
+
+                }
+
+
                 carte.classList.add(
                     "visible"
                 );
 
-            } catch (error) {
+            }
+            catch (error) {
 
                 console.error(error);
+
 
                 document.getElementById(
                     "statut"
                 ).textContent =
                     "HORS LIGNE";
 
+
                 document.getElementById(
                     "statut"
                 ).style.color =
                     couleurs.offline;
 
+
+                document.getElementById(
+                    "point"
+                ).style.background =
+                    couleurs.offline;
+
+
+                document.getElementById(
+                    "jeuCard"
+                ).classList.remove(
+                    "visible"
+                );
+
             }
 
         }
 
+
+        /* TIMER */
+
+        function afficherTemps() {
+
+            if (!debutActivite) {
+
+                document.getElementById(
+                    "jeuTiming"
+                ).textContent = "";
+
+                return;
+
+            }
+
+
+            const secondes =
+                Math.floor(
+                    (
+                        Date.now()
+                        -
+                        debutActivite
+                    ) / 1000
+                );
+
+
+            const heures =
+                Math.floor(
+                    secondes / 3600
+                );
+
+
+            const minutes =
+                Math.floor(
+                    (secondes % 3600) / 60
+                );
+
+
+            const secs =
+                secondes % 60;
+
+
+            if (heures > 0) {
+
+                document.getElementById(
+                    "jeuTiming"
+                ).textContent =
+                    "Depuis " +
+                    heures +
+                    "h " +
+                    minutes +
+                    "min";
+
+            }
+            else {
+
+                document.getElementById(
+                    "jeuTiming"
+                ).textContent =
+                    "Depuis " +
+                    minutes
+                        .toString()
+                        .padStart(2, "0") +
+                    "min " +
+                    secs
+                        .toString()
+                        .padStart(2, "0") +
+                    "s";
+
+            }
+
+        }
+
+
+        /* =========================
+           SON
+           ========================= */
+
+        const video =
+            document.querySelector(
+                ".video-background"
+            );
+
+
+        const soundButton =
+            document.getElementById(
+                "soundButton"
+            );
+
+
+        soundButton.addEventListener(
+            "click",
+            function() {
+
+                video.muted =
+                    !video.muted;
+
+
+                soundButton.textContent =
+                    video.muted
+                        ? "🔇"
+                        : "🔊";
+
+            }
+        );
+
+
+        /* =========================
+           DÉMARRAGE
+           ========================= */
 
         chargerDiscord();
 
@@ -822,34 +1241,10 @@
         );
 
 
-        /* =========================
-           SON
-           ========================= */
-
-        function toggleSound() {
-
-            const video =
-                document.querySelector(
-                    ".video-background"
-                );
-
-
-            const button =
-                document.querySelector(
-                    ".sound-button"
-                );
-
-
-            video.muted =
-                !video.muted;
-
-
-            button.textContent =
-                video.muted
-                    ? "🔇"
-                    : "🔊";
-
-        }
+        setInterval(
+            afficherTemps,
+            1000
+        );
 
     </script>
 
