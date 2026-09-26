@@ -1,102 +1,153 @@
 ```html
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>¹²³⁴⁵</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         html,
         body {
+
             width: 100%;
             height: 100%;
+
             margin: 0;
+
         }
+
 
         body {
+
             overflow: hidden;
+
             background: #000;
+
             color: white;
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             cursor: none;
+
         }
 
-        /* =========================
-           VIDÉO DE FOND
-           ========================= */
+
+        /* =====================================
+           VIDÉO
+           ===================================== */
 
         .video-background {
+
             position: fixed;
+
             inset: 0;
 
             width: 100%;
             height: 100%;
 
             object-fit: cover;
-            object-position: center;
 
             z-index: 0;
 
             filter:
-                brightness(0.92)
-                contrast(1.08)
+                brightness(0.90)
+                contrast(1.10)
                 saturate(1.08);
 
-            transform: scale(1.01);
+            transform: scale(1.015);
+
         }
 
-        .overlay {
-            position: fixed;
-            inset: 0;
 
-            background:
-                linear-gradient(
-                    to bottom,
-                    rgba(0, 0, 0, 0.12),
-                    rgba(0, 0, 0, 0.42)
-                );
+        .overlay {
+
+            position: fixed;
+
+            inset: 0;
 
             z-index: 1;
 
             pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(0,0,0,0.05),
+                    rgba(0,0,0,0.48)
+                );
+
         }
 
-        /* =========================
-           CURSEUR ÉPÉE
-           ========================= */
 
-        #sword-cursor {
+        /* =====================================
+           PARTICULES
+           ===================================== */
+
+        #particles {
+
             position: fixed;
 
-            left: 0;
-            top: 0;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            z-index: 1;
+
+            pointer-events: none;
+
+        }
+
+
+        /* =====================================
+           CURSEUR ÉPÉE
+           ===================================== */
+
+        #sword-cursor {
+
+            position: fixed;
 
             width: 70px;
             height: 70px;
+
+            left: 0;
+            top: 0;
 
             z-index: 999999;
 
             pointer-events: none;
 
             transform:
-                translate(-12px, -12px)
+                translate(-12px,-12px)
                 rotate(-45deg);
 
             filter:
-                drop-shadow(0 0 4px white)
-                drop-shadow(0 0 10px #8ec5ff)
-                drop-shadow(0 0 20px #4da6ff);
+                drop-shadow(0 0 5px white)
+                drop-shadow(0 0 12px #7fc8ff)
+                drop-shadow(0 0 24px #258cff);
+
         }
 
-        /* LAME */
 
         .sword-blade {
+
             position: absolute;
 
             left: 31px;
@@ -108,26 +159,26 @@
             background:
                 linear-gradient(
                     90deg,
-                    #666,
-                    #ffffff,
+                    #555,
+                    #fff,
                     #dcecff,
                     #777
                 );
 
-            clip-path: polygon(
-                20% 0%,
-                80% 0%,
-                100% 88%,
-                50% 100%,
-                0% 88%
-            );
+            clip-path:
+                polygon(
+                    20% 0,
+                    80% 0,
+                    100% 88%,
+                    50% 100%,
+                    0 88%
+                );
 
-            border-radius: 3px;
         }
 
-        /* REFLET DE LA LAME */
 
         .sword-blade::after {
+
             content: "";
 
             position: absolute;
@@ -140,14 +191,11 @@
 
             background: white;
 
-            opacity: 0.9;
-
-            transform: skewX(-10deg);
         }
 
-        /* GARDE */
 
         .sword-guard {
+
             position: absolute;
 
             left: 17px;
@@ -162,17 +210,18 @@
                 linear-gradient(
                     90deg,
                     #555,
-                    #ffffff,
+                    #fff,
                     #777
                 );
 
             box-shadow:
-                0 0 8px rgba(255,255,255,0.8);
+                0 0 8px white;
+
         }
 
-        /* POIGNÉE */
 
         .sword-handle {
+
             position: absolute;
 
             left: 31px;
@@ -191,11 +240,12 @@
                     #aaa 4px,
                     #111 6px
                 );
+
         }
 
-        /* POMMEAU */
 
         .sword-pommel {
+
             position: absolute;
 
             left: 29px;
@@ -211,162 +261,280 @@
                     circle at 35% 30%,
                     white,
                     #aaa 45%,
-                    #555
+                    #444
                 );
 
             box-shadow:
-                0 0 8px white;
+                0 0 10px white;
+
         }
 
-        /* =========================
-           TRAÎNÉE DU CURSEUR
-           ========================= */
+
+        /* =====================================
+           TRAÎNÉE CURSEUR
+           ===================================== */
 
         .cursor-trail {
+
             position: fixed;
 
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
 
             border-radius: 50%;
 
             background: white;
 
-            pointer-events: none;
-
             z-index: 999998;
 
+            pointer-events: none;
+
             box-shadow:
-                0 0 7px white,
-                0 0 15px #65b5ff;
+                0 0 8px white,
+                0 0 18px #48aaff;
 
             animation:
-                trailFade 0.45s linear forwards;
+                trailFade 0.5s forwards;
+
         }
 
+
         @keyframes trailFade {
+
             from {
-                opacity: 0.8;
-                transform: scale(1);
+
+                opacity: .85;
+
+                transform:
+                    scale(1);
+
             }
 
             to {
+
                 opacity: 0;
-                transform: scale(0);
+
+                transform:
+                    scale(0);
+
             }
+
         }
 
-        /* =========================
+
+        /* =====================================
+           CLIC LUMINEUX
+           ===================================== */
+
+        .click-effect {
+
+            position: fixed;
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            z-index: 999997;
+
+            border:
+                2px solid white;
+
+            box-shadow:
+                0 0 10px white,
+                0 0 25px #4da6ff,
+                0 0 50px #4da6ff;
+
+            animation:
+                clickExplosion .65s ease-out forwards;
+
+        }
+
+
+        @keyframes clickExplosion {
+
+            0% {
+
+                opacity: 1;
+
+                transform:
+                    translate(-50%,-50%)
+                    scale(.2);
+
+            }
+
+            100% {
+
+                opacity: 0;
+
+                transform:
+                    translate(-50%,-50%)
+                    scale(7);
+
+            }
+
+        }
+
+
+        /* =====================================
            PROFIL
-           ========================= */
+           ===================================== */
 
         .profil {
+
             position: relative;
 
-            z-index: 2;
+            z-index: 5;
 
-            width: min(92vw, 440px);
+            width:
+                min(92vw, 460px);
+
             min-height: 100vh;
 
             margin: auto;
 
             display: flex;
+
             flex-direction: column;
 
             align-items: center;
+
             justify-content: center;
 
             text-align: center;
 
             animation:
-                apparition 0.9s ease;
+                apparition 1s ease;
+
         }
 
-        /* PHOTO */
 
         .photo-container {
+
             position: relative;
 
             width: 150px;
             height: 150px;
 
-            margin-bottom: 22px;
+            margin-bottom: 20px;
+
         }
 
+
         .photo-container::before {
+
             content: "";
 
             position: absolute;
 
-            inset: -22px;
+            inset: -25px;
 
             border-radius: 50%;
 
             background:
                 radial-gradient(
                     circle,
-                    rgba(255,255,255,0.35),
+                    rgba(100,180,255,.45),
                     transparent 70%
                 );
 
-            filter: blur(18px);
+            filter: blur(20px);
 
             animation:
-                halo 3s ease-in-out infinite;
+                halo 3s infinite ease-in-out;
+
         }
 
+
         .photo-profil {
+
             position: relative;
 
             width: 150px;
             height: 150px;
 
-            display: block;
+            object-fit: cover;
 
             border-radius: 50%;
 
-            object-fit: cover;
-
             border:
-                3px solid rgba(255,255,255,0.95);
+                3px solid white;
 
             box-shadow:
-                0 0 20px rgba(0,0,0,0.9),
-                0 0 45px rgba(255,255,255,0.18);
+                0 0 20px rgba(0,0,0,.9),
+                0 0 45px rgba(100,180,255,.35);
+
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease;
+
         }
 
-        /* NOM */
+
+        .photo-profil:hover {
+
+            transform:
+                scale(1.08)
+                rotate(2deg);
+
+            box-shadow:
+                0 0 25px white,
+                0 0 70px rgba(70,170,255,.75);
+
+        }
+
 
         h1 {
+
             margin: 0;
 
             font-size: 46px;
 
-            font-weight: 700;
-
-            letter-spacing: 3px;
+            letter-spacing: 4px;
 
             text-shadow:
-                0 0 14px rgba(255,255,255,0.25),
-                0 5px 25px rgba(0,0,0,1);
+                0 0 15px rgba(255,255,255,.3),
+                0 5px 25px black;
+
+            transition:
+                transform .3s ease;
+
         }
 
-        /* STATUT */
+
+        h1:hover {
+
+            transform:
+                scale(1.06);
+
+        }
+
+
+        /* =====================================
+           STATUT
+           ===================================== */
 
         .activite {
+
             margin-top: 14px;
 
             display: flex;
+
             align-items: center;
 
             gap: 9px;
 
             font-size: 15px;
 
-            font-weight: 700;
+            font-weight: bold;
+
         }
 
+
         .point {
+
             width: 9px;
             height: 9px;
 
@@ -374,24 +542,87 @@
 
             background: #777;
 
-            transition:
-                background 0.3s ease,
-                box-shadow 0.3s ease;
-
             animation:
-                pulse 1.7s ease-in-out infinite;
+                pulse 1.7s infinite;
+
         }
 
-        /* =========================
-           CARTE DISCORD
-           ========================= */
+
+        /* =====================================
+           BADGES
+           ===================================== */
+
+        .badges {
+
+            display: flex;
+
+            justify-content: center;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 14px;
+
+        }
+
+
+        .badge {
+
+            padding:
+                6px 10px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            color: rgba(255,255,255,.85);
+
+            background:
+                rgba(10,10,10,.55);
+
+            border:
+                1px solid rgba(255,255,255,.14);
+
+            backdrop-filter:
+                blur(12px);
+
+            box-shadow:
+                inset 0 1px 0
+                rgba(255,255,255,.08);
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
+
+        }
+
+
+        .badge:hover {
+
+            transform:
+                translateY(-3px)
+                scale(1.04);
+
+            background:
+                rgba(255,255,255,.12);
+
+        }
+
+
+        /* =====================================
+           CARTE ACTIVITÉ
+           ===================================== */
 
         .jeu-card {
+
             width: 100%;
 
             margin-top: 18px;
 
-            padding: 14px;
+            padding: 15px;
 
             display: none;
 
@@ -401,33 +632,36 @@
 
             text-align: left;
 
-            border-radius: 17px;
+            border-radius: 18px;
 
             background:
-                rgba(12,12,12,0.58);
+                rgba(8,8,8,.60);
 
             border:
-                1px solid rgba(255,255,255,0.14);
+                1px solid
+                rgba(255,255,255,.14);
 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter:
+                blur(20px);
 
             box-shadow:
-                0 15px 45px rgba(0,0,0,0.38),
-                inset 0 1px 0 rgba(255,255,255,0.07);
+                0 20px 50px
+                rgba(0,0,0,.4);
 
             opacity: 0;
 
             transform:
-                translateY(10px)
-                scale(0.98);
+                translateY(12px)
+                scale(.97);
 
             transition:
-                opacity 0.35s ease,
-                transform 0.35s ease;
+                .35s ease;
+
         }
 
+
         .jeu-card.visible {
+
             display: flex;
 
             opacity: 1;
@@ -435,88 +669,139 @@
             transform:
                 translateY(0)
                 scale(1);
+
         }
 
+
         .jeu-icone {
+
             width: 58px;
             height: 58px;
 
             flex-shrink: 0;
 
-            border-radius: 13px;
-
             display: flex;
+
             align-items: center;
             justify-content: center;
+
+            border-radius: 14px;
 
             font-size: 26px;
 
             background:
-                rgba(255,255,255,0.08);
+                rgba(255,255,255,.08);
 
             border:
-                1px solid rgba(255,255,255,0.12);
+                1px solid
+                rgba(255,255,255,.12);
+
         }
+
 
         .jeu-infos {
+
             min-width: 0;
 
-            display: flex;
-            flex-direction: column;
-
-            gap: 4px;
         }
+
 
         .jeu-label {
+
             font-size: 10px;
 
-            text-transform: uppercase;
-
-            letter-spacing: 1.4px;
+            letter-spacing: 1.5px;
 
             color:
-                rgba(255,255,255,0.45);
+                rgba(255,255,255,.45);
 
-            font-weight: 700;
         }
 
+
         .jeu-nom {
+
+            margin-top: 3px;
+
             font-size: 16px;
 
-            font-weight: 700;
+            font-weight: bold;
 
             white-space: nowrap;
 
             overflow: hidden;
 
             text-overflow: ellipsis;
+
         }
 
+
         .jeu-details {
+
+            margin-top: 3px;
+
             font-size: 13px;
 
             color:
-                rgba(255,255,255,0.72);
+                rgba(255,255,255,.7);
 
             white-space: nowrap;
 
             overflow: hidden;
 
             text-overflow: ellipsis;
+
         }
+
 
         .jeu-timing {
-            font-size: 12px;
+
+            margin-top: 4px;
+
+            font-size: 11px;
 
             color:
-                rgba(255,255,255,0.43);
+                rgba(255,255,255,.4);
+
         }
 
-        /* =========================
-           BOUTON SON
-           ========================= */
+
+        /* =====================================
+           VUES
+           ===================================== */
+
+        .views {
+
+            margin-top: 13px;
+
+            padding:
+                6px 11px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            color:
+                rgba(255,255,255,.55);
+
+            background:
+                rgba(0,0,0,.4);
+
+            border:
+                1px solid
+                rgba(255,255,255,.1);
+
+            backdrop-filter:
+                blur(10px);
+
+        }
+
+
+        /* =====================================
+           SON
+           ===================================== */
 
         .sound-button {
+
             position: fixed;
 
             right: 25px;
@@ -525,121 +810,157 @@
             width: 58px;
             height: 58px;
 
-            border:
-                1px solid rgba(255,255,255,0.20);
-
             border-radius: 50%;
 
+            border:
+                1px solid
+                rgba(255,255,255,.2);
+
             background:
-                rgba(15,15,15,0.55);
+                rgba(10,10,10,.6);
 
             color: white;
 
-            font-size: 23px;
+            font-size: 22px;
 
             cursor: none;
 
-            z-index: 10;
+            z-index: 20;
 
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter:
+                blur(14px);
+
+            transition:
+                transform .2s ease;
+
         }
 
-        /* =========================
+
+        .sound-button:hover {
+
+            transform:
+                scale(1.1);
+
+        }
+
+
+        /* =====================================
            ANIMATIONS
-           ========================= */
+           ===================================== */
 
         @keyframes apparition {
+
             from {
+
                 opacity: 0;
 
                 transform:
                     translateY(25px)
-                    scale(0.96);
+                    scale(.96);
+
             }
 
             to {
+
                 opacity: 1;
 
                 transform:
                     translateY(0)
                     scale(1);
+
             }
+
         }
+
 
         @keyframes halo {
-            0%, 100% {
-                transform: scale(0.92);
-                opacity: 0.45;
+
+            0%,100% {
+
+                transform:
+                    scale(.9);
+
+                opacity: .4;
+
             }
 
             50% {
-                transform: scale(1.08);
-                opacity: 0.85;
+
+                transform:
+                    scale(1.08);
+
+                opacity: .8;
+
             }
+
         }
+
 
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
+
+            0%,100% {
+
+                transform:
+                    scale(1);
+
             }
 
             50% {
-                transform: scale(1.35);
+
+                transform:
+                    scale(1.35);
+
             }
+
         }
 
-        /* =========================
-           MOBILE
-           ========================= */
 
-        @media (max-width: 600px) {
+        /* =====================================
+           MOBILE
+           ===================================== */
+
+        @media(max-width:600px) {
 
             body {
+
                 cursor: auto;
+
             }
+
 
             #sword-cursor,
             .cursor-trail {
+
                 display: none;
+
             }
 
+
             .profil {
+
                 width: 88vw;
+
             }
+
 
             .photo-container,
             .photo-profil {
+
                 width: 115px;
                 height: 115px;
+
             }
+
 
             h1 {
+
                 font-size: 33px;
+
             }
 
-            .activite {
-                font-size: 14px;
-            }
-
-            .jeu-card {
-                padding: 12px;
-            }
-
-            .jeu-icone {
-                width: 48px;
-                height: 48px;
-            }
-
-            .jeu-nom {
-                font-size: 14px;
-            }
-
-            .jeu-details {
-                font-size: 12px;
-            }
 
             .sound-button {
+
                 cursor: pointer;
 
                 width: 52px;
@@ -647,16 +968,29 @@
 
                 right: 18px;
                 bottom: 18px;
+
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         CURSEUR
-         ========================= -->
+
+    <!-- =====================================
+         PARTICULES
+         ===================================== -->
+
+    <canvas id="particles"></canvas>
+
+
+    <!-- =====================================
+         CURSEUR ÉPÉE
+         ===================================== -->
 
     <div id="sword-cursor">
 
@@ -671,9 +1005,9 @@
     </div>
 
 
-    <!-- =========================
+    <!-- =====================================
          VIDÉO
-         ========================= -->
+         ===================================== -->
 
     <video
         class="video-background"
@@ -693,11 +1027,12 @@
     <div class="overlay"></div>
 
 
-    <!-- =========================
+    <!-- =====================================
          PROFIL
-         ========================= -->
+         ===================================== -->
 
     <main class="profil">
+
 
         <div class="photo-container">
 
@@ -725,6 +1060,25 @@
 
         </div>
 
+
+        <!-- BADGES -->
+
+        <div
+            class="badges"
+            id="badges">
+
+            <span class="badge">
+                ✦ PROFILE
+            </span>
+
+            <span class="badge">
+                ⚡ ACTIVE
+            </span>
+
+        </div>
+
+
+        <!-- ACTIVITÉ -->
 
         <div
             class="jeu-card"
@@ -767,17 +1121,26 @@
 
         </div>
 
+
+        <!-- VUES -->
+
+        <div
+            class="views"
+            id="views">
+
+            👁 0 vues
+
+        </div>
+
+
     </main>
 
 
-    <!-- =========================
-         BOUTON SON
-         ========================= -->
+    <!-- SON -->
 
     <button
         class="sound-button"
-        id="soundButton"
-        aria-label="Activer ou couper le son">
+        id="soundButton">
 
         🔇
 
@@ -786,9 +1149,23 @@
 
     <script>
 
-        /* =========================
-           CURSEUR ÉPÉE
-           ========================= */
+
+        /* =====================================
+           ID DISCORD
+           ===================================== */
+
+        /*
+           ⚠️ GARDE TON VRAI ID DISCORD
+           ENTRE LES GUILLEMETS.
+        */
+
+        const DISCORD_ID =
+            "1303798212540239923";
+
+
+        /* =====================================
+           CURSEUR
+           ===================================== */
 
         const sword =
             document.getElementById(
@@ -796,57 +1173,61 @@
             );
 
 
-        let sourisX = 0;
-        let sourisY = 0;
+        let mouseX = 0;
+        let mouseY = 0;
 
-        let curseurX = 0;
-        let curseurY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
 
 
         document.addEventListener(
             "mousemove",
             function(event) {
 
-                sourisX =
+                mouseX =
                     event.clientX;
 
-                sourisY =
+                mouseY =
                     event.clientY;
 
             }
         );
 
 
-        function suivreSouris() {
+        function animateCursor() {
 
-            curseurX +=
-                (sourisX - curseurX) * 0.35;
+            cursorX +=
+                (mouseX - cursorX)
+                * 0.35;
 
-            curseurY +=
-                (sourisY - curseurY) * 0.35;
+            cursorY +=
+                (mouseY - cursorY)
+                * 0.35;
 
 
             sword.style.left =
-                curseurX + "px";
+                cursorX + "px";
 
             sword.style.top =
-                curseurY + "px";
+                cursorY + "px";
 
 
             requestAnimationFrame(
-                suivreSouris
+                animateCursor
             );
 
         }
 
 
-        suivreSouris();
+        animateCursor();
 
 
-        /* TRAÎNÉE */
+        /* =====================================
+           TRAÎNÉE
+           ===================================== */
 
-        let dernierX = 0;
-        let dernierY = 0;
+        let lastX = 0;
+        let lastY = 0;
 
 
         document.addEventListener(
@@ -855,12 +1236,12 @@
 
                 const distance =
                     Math.hypot(
-                        event.clientX - dernierX,
-                        event.clientY - dernierY
+                        event.clientX - lastX,
+                        event.clientY - lastY
                     );
 
 
-                if (distance > 25) {
+                if (distance > 22) {
 
                     const trail =
                         document.createElement(
@@ -887,16 +1268,18 @@
 
                     setTimeout(
                         function() {
+
                             trail.remove();
+
                         },
-                        450
+                        500
                     );
 
 
-                    dernierX =
+                    lastX =
                         event.clientX;
 
-                    dernierY =
+                    lastY =
                         event.clientY;
 
                 }
@@ -905,18 +1288,181 @@
         );
 
 
-        /* =========================
-           DISCORD / LANYARD
-           ========================= */
+        /* =====================================
+           EFFET CLIC
+           ===================================== */
 
-        /*
-           ⚠️ REMPLACE UNIQUEMENT
-           TON_ID_DISCORD PAR TON ID.
-        */
+        document.addEventListener(
+            "click",
+            function(event) {
 
-        const DISCORD_ID =
-            "1303798212540239923";
+                const effect =
+                    document.createElement(
+                        "div"
+                    );
 
+
+                effect.className =
+                    "click-effect";
+
+
+                effect.style.left =
+                    event.clientX + "px";
+
+
+                effect.style.top =
+                    event.clientY + "px";
+
+
+                document.body.appendChild(
+                    effect
+                );
+
+
+                setTimeout(
+                    function() {
+
+                        effect.remove();
+
+                    },
+                    700
+                );
+
+            }
+        );
+
+
+        /* =====================================
+           PARTICULES
+           ===================================== */
+
+        const canvas =
+            document.getElementById(
+                "particles"
+            );
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        let particles = [];
+
+
+        function resizeCanvas() {
+
+            canvas.width =
+                window.innerWidth;
+
+            canvas.height =
+                window.innerHeight;
+
+        }
+
+
+        resizeCanvas();
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        for (
+            let i = 0;
+            i < 55;
+            i++
+        ) {
+
+            particles.push({
+
+                x:
+                    Math.random()
+                    * window.innerWidth,
+
+                y:
+                    Math.random()
+                    * window.innerHeight,
+
+                size:
+                    Math.random() * 2 + 0.5,
+
+                speed:
+                    Math.random() * 0.35 + 0.1,
+
+                opacity:
+                    Math.random() * 0.5 + 0.15
+
+            });
+
+        }
+
+
+        function animateParticles() {
+
+            ctx.clearRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+
+            particles.forEach(
+                function(p) {
+
+                    p.y -= p.speed;
+
+
+                    if (p.y < -10) {
+
+                        p.y =
+                            canvas.height + 10;
+
+                    }
+
+
+                    ctx.beginPath();
+
+
+                    ctx.arc(
+                        p.x,
+                        p.y,
+                        p.size,
+                        0,
+                        Math.PI * 2
+                    );
+
+
+                    ctx.fillStyle =
+                        `rgba(
+                            255,
+                            255,
+                            255,
+                            ${p.opacity}
+                        )`;
+
+
+                    ctx.fill();
+
+                }
+            );
+
+
+            requestAnimationFrame(
+                animateParticles
+            );
+
+        }
+
+
+        animateParticles();
+
+
+        /* =====================================
+           DISCORD
+           ===================================== */
 
         const couleurs = {
 
@@ -976,13 +1522,13 @@
 
 
                 const statut =
-                    data.discord_status ||
-                    "offline";
+                    data.discord_status
+                    || "offline";
 
 
                 const couleur =
-                    couleurs[statut] ||
-                    couleurs.offline;
+                    couleurs[statut]
+                    || couleurs.offline;
 
 
                 const statutElement =
@@ -1010,82 +1556,131 @@
 
 
                 point.style.boxShadow =
-                    "0 0 8px " +
-                    couleur +
-                    ", 0 0 18px " +
-                    couleur;
+                    "0 0 8px "
+                    + couleur
+                    + ", 0 0 18px "
+                    + couleur;
 
 
-                /* ACTIVITÉ */
+                /* =================================
+                   ACTIVITÉ
+                   ================================= */
 
-                const activites =
+                const activities =
                     data.activities || [];
 
 
-                const activite =
-                    activites.find(
-                        function(activity) {
+                const activity =
+                    activities.find(
+                        function(a) {
 
-                            return activity.type === 0;
+                            return a.type === 0;
 
                         }
                     );
 
 
-                const carte =
+                const card =
                     document.getElementById(
                         "jeuCard"
                     );
 
 
-                if (!activite) {
+                if (!activity) {
 
-                    carte.classList.remove(
+                    card.classList.remove(
                         "visible"
                     );
 
                     debutActivite =
                         null;
 
-                    return;
+                }
+                else {
+
+                    document.getElementById(
+                        "jeuNom"
+                    ).textContent =
+                        activity.name
+                        || "Activité";
+
+
+                    document.getElementById(
+                        "jeuDetails"
+                    ).textContent =
+                        activity.details
+                        || activity.state
+                        || "En cours";
+
+
+                    if (
+                        activity.timestamps
+                        &&
+                        activity.timestamps.start
+                    ) {
+
+                        debutActivite =
+                            activity.timestamps.start;
+
+                    }
+                    else {
+
+                        debutActivite =
+                            null;
+
+                    }
+
+
+                    card.classList.add(
+                        "visible"
+                    );
 
                 }
 
 
-                document.getElementById(
-                    "jeuNom"
-                ).textContent =
-                    activite.name ||
-                    "Activité";
+                /* =================================
+                   BADGES
+                   ================================= */
+
+                const badges =
+                    document.getElementById(
+                        "badges"
+                    );
 
 
-                document.getElementById(
-                    "jeuDetails"
-                ).textContent =
-                    activite.details ||
-                    activite.state ||
-                    "En cours";
+                badges.innerHTML = "";
 
 
-                if (
-                    activite.timestamps &&
-                    activite.timestamps.start
-                ) {
+                badges.innerHTML +=
+                    `<span class="badge">
+                        🟢 DISCORD
+                    </span>`;
 
-                    debutActivite =
-                        activite.timestamps.start;
 
-                } else {
+                if (statut === "online") {
 
-                    debutActivite =
-                        null;
+                    badges.innerHTML +=
+                        `<span class="badge">
+                            ⚡ ONLINE
+                        </span>`;
 
                 }
 
 
-                carte.classList.add(
-                    "visible"
-                );
+                if (activity) {
+
+                    badges.innerHTML +=
+                        `<span class="badge">
+                            🎮 GAMING
+                        </span>`;
+
+                }
+
+
+                badges.innerHTML +=
+                    `<span class="badge">
+                        ✦ PROFILE
+                    </span>`;
 
             }
             catch (error) {
@@ -1110,34 +1705,34 @@
                 ).style.background =
                     couleurs.offline;
 
-
-                document.getElementById(
-                    "jeuCard"
-                ).classList.remove(
-                    "visible"
-                );
-
             }
 
         }
 
 
-        /* TIMER */
+        /* =====================================
+           TIMER ACTIVITÉ
+           ===================================== */
 
         function afficherTemps() {
 
-            if (!debutActivite) {
-
+            const timing =
                 document.getElementById(
                     "jeuTiming"
-                ).textContent = "";
+                );
+
+
+            if (!debutActivite) {
+
+                timing.textContent =
+                    "";
 
                 return;
 
             }
 
 
-            const secondes =
+            const total =
                 Math.floor(
                     (
                         Date.now()
@@ -1149,55 +1744,87 @@
 
             const heures =
                 Math.floor(
-                    secondes / 3600
+                    total / 3600
                 );
 
 
             const minutes =
                 Math.floor(
-                    (secondes % 3600) / 60
+                    (total % 3600) / 60
                 );
 
 
-            const secs =
-                secondes % 60;
+            const secondes =
+                total % 60;
 
 
             if (heures > 0) {
 
-                document.getElementById(
-                    "jeuTiming"
-                ).textContent =
-                    "Depuis " +
-                    heures +
-                    "h " +
-                    minutes +
-                    "min";
+                timing.textContent =
+                    "Depuis "
+                    + heures
+                    + "h "
+                    + minutes
+                    + "min";
 
             }
             else {
 
-                document.getElementById(
-                    "jeuTiming"
-                ).textContent =
-                    "Depuis " +
-                    minutes
+                timing.textContent =
+                    "Depuis "
+                    + minutes
                         .toString()
-                        .padStart(2, "0") +
-                    "min " +
-                    secs
+                        .padStart(2,"0")
+                    + "min "
+                    + secondes
                         .toString()
-                        .padStart(2, "0") +
-                    "s";
+                        .padStart(2,"0")
+                    + "s";
 
             }
 
         }
 
 
-        /* =========================
+        /* =====================================
+           COMPTEUR DE VUES
+           ===================================== */
+
+        let vues =
+            parseInt(
+                localStorage.getItem(
+                    "brufor_profile_views"
+                )
+            );
+
+
+        if (isNaN(vues)) {
+
+            vues = 0;
+
+        }
+
+
+        vues++;
+
+
+        localStorage.setItem(
+            "brufor_profile_views",
+            vues
+        );
+
+
+        document.getElementById(
+            "views"
+        ).textContent =
+            "👁 "
+            + vues
+            + " vues";
+
+
+        /* =====================================
            SON
-           ========================= */
+           ===================================== */
 
         const video =
             document.querySelector(
@@ -1228,9 +1855,9 @@
         );
 
 
-        /* =========================
-           DÉMARRAGE
-           ========================= */
+        /* =====================================
+           LANCEMENT
+           ===================================== */
 
         chargerDiscord();
 
@@ -1249,5 +1876,6 @@
     </script>
 
 </body>
+
 </html>
 ```
