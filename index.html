@@ -27,29 +27,43 @@
         }
 
         /* ==============================
-           VIDEO
+           VIDÉO
            ============================== */
 
         .video-background {
             position: fixed;
             inset: 0;
+
             width: 100%;
             height: 100%;
+
             object-fit: cover;
-            object-position: center;
+            object-position: center center;
+
             z-index: 0;
+
+            /* Améliore le rendu visuel */
+            filter: brightness(0.92) contrast(1.08) saturate(1.08);
+
+            transform: scale(1.01);
+
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
         }
 
         .overlay {
             position: fixed;
             inset: 0;
+
             background:
-                radial-gradient(
-                    circle at center,
-                    rgba(0, 0, 0, 0.10),
-                    rgba(0, 0, 0, 0.60)
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.15),
+                    rgba(0, 0, 0, 0.38)
                 );
+
             z-index: 1;
+
             pointer-events: none;
         }
 
@@ -61,7 +75,7 @@
             position: relative;
             z-index: 2;
 
-            width: min(92vw, 430px);
+            width: min(92vw, 440px);
 
             display: flex;
             flex-direction: column;
@@ -69,7 +83,7 @@
 
             text-align: center;
 
-            animation: apparition 1s ease;
+            animation: apparition 0.9s ease;
         }
 
         /* ==============================
@@ -89,14 +103,18 @@
             content: "";
 
             position: absolute;
-
-            inset: -20px;
+            inset: -22px;
 
             border-radius: 50%;
 
-            background: rgba(255, 255, 255, 0.18);
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,255,255,0.32),
+                    rgba(255,255,255,0)
+                );
 
-            filter: blur(25px);
+            filter: blur(18px);
 
             animation: halo 3s ease-in-out infinite;
         }
@@ -113,11 +131,13 @@
 
             display: block;
 
-            border: 3px solid rgba(255, 255, 255, 0.95);
+            border: 3px solid rgba(255,255,255,0.95);
 
             box-shadow:
-                0 0 25px rgba(0, 0, 0, 0.9),
-                0 0 55px rgba(255, 255, 255, 0.18);
+                0 0 20px rgba(0,0,0,0.9),
+                0 0 45px rgba(255,255,255,0.18);
+
+            image-rendering: auto;
         }
 
         /* ==============================
@@ -134,8 +154,8 @@
             letter-spacing: 3px;
 
             text-shadow:
-                0 0 15px rgba(255, 255, 255, 0.25),
-                0 5px 25px rgba(0, 0, 0, 1);
+                0 0 14px rgba(255,255,255,0.25),
+                0 5px 25px rgba(0,0,0,1);
         }
 
         /* ==============================
@@ -155,8 +175,9 @@
 
             font-weight: 700;
 
-            text-shadow:
-                0 2px 12px rgba(0, 0, 0, 1);
+            transition:
+                color 0.35s ease,
+                transform 0.35s ease;
         }
 
         .point {
@@ -167,15 +188,15 @@
 
             background: #777;
 
-            box-shadow:
-                0 0 8px #777,
-                0 0 18px rgba(255, 255, 255, 0.25);
+            transition:
+                background 0.35s ease,
+                box-shadow 0.35s ease;
 
             animation: pulse 1.7s ease-in-out infinite;
         }
 
         /* ==============================
-           CARTE ACTIVITÉ
+           CARTE DISCORD
            ============================== */
 
         .jeu-card {
@@ -183,7 +204,7 @@
 
             margin-top: 18px;
 
-            padding: 14px 16px;
+            padding: 14px;
 
             display: none;
 
@@ -193,44 +214,70 @@
 
             text-align: left;
 
-            border-radius: 16px;
+            border-radius: 17px;
 
-            background: rgba(15, 15, 15, 0.52);
+            background:
+                rgba(12, 12, 12, 0.58);
 
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border:
+                1px solid rgba(255,255,255,0.14);
 
-            backdrop-filter: blur(18px);
-
-            -webkit-backdrop-filter: blur(18px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
 
             box-shadow:
-                0 10px 35px rgba(0, 0, 0, 0.35),
-                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+                0 15px 45px rgba(0,0,0,0.38),
+                inset 0 1px 0 rgba(255,255,255,0.07);
 
-            animation: carte 0.5s ease;
+            opacity: 0;
+
+            transform:
+                translateY(10px)
+                scale(0.98);
+
+            transition:
+                opacity 0.35s ease,
+                transform 0.35s ease;
         }
 
         .jeu-card.visible {
             display: flex;
+
+            opacity: 1;
+
+            transform:
+                translateY(0)
+                scale(1);
+        }
+
+        .jeu-card.changement {
+            animation: changement 0.5s ease;
         }
 
         /* ==============================
-           ICONE JEU
+           ICÔNE
            ============================== */
 
         .jeu-icone {
-            width: 55px;
-            height: 55px;
+            width: 58px;
+            height: 58px;
 
             flex-shrink: 0;
 
-            border-radius: 12px;
+            border-radius: 13px;
 
             object-fit: cover;
 
-            background: rgba(255, 255, 255, 0.08);
+            background:
+                rgba(255,255,255,0.08);
 
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.25);
+
+            overflow: hidden;
         }
 
         .jeu-icone.placeholder {
@@ -239,11 +286,11 @@
             align-items: center;
             justify-content: center;
 
-            font-size: 25px;
+            font-size: 26px;
         }
 
         /* ==============================
-           INFORMATIONS JEU
+           TEXTE ACTIVITÉ
            ============================== */
 
         .jeu-infos {
@@ -257,13 +304,14 @@
         }
 
         .jeu-label {
-            font-size: 11px;
+            font-size: 10px;
 
             text-transform: uppercase;
 
-            letter-spacing: 1.3px;
+            letter-spacing: 1.4px;
 
-            color: rgba(255, 255, 255, 0.48);
+            color:
+                rgba(255,255,255,0.45);
 
             font-weight: 700;
         }
@@ -283,7 +331,8 @@
         .jeu-details {
             font-size: 13px;
 
-            color: rgba(255, 255, 255, 0.72);
+            color:
+                rgba(255,255,255,0.72);
 
             white-space: nowrap;
 
@@ -293,11 +342,12 @@
         }
 
         .jeu-timing {
-            margin-top: 2px;
-
             font-size: 12px;
 
-            color: rgba(255, 255, 255, 0.45);
+            color:
+                rgba(255,255,255,0.43);
+
+            margin-top: 1px;
         }
 
         /* ==============================
@@ -313,11 +363,13 @@
             width: 58px;
             height: 58px;
 
-            border: 1px solid rgba(255, 255, 255, 0.20);
+            border:
+                1px solid rgba(255,255,255,0.20);
 
             border-radius: 50%;
 
-            background: rgba(15, 15, 15, 0.55);
+            background:
+                rgba(15,15,15,0.55);
 
             color: white;
 
@@ -328,7 +380,6 @@
             z-index: 10;
 
             backdrop-filter: blur(14px);
-
             -webkit-backdrop-filter: blur(14px);
 
             transition:
@@ -339,7 +390,8 @@
         .sound-button:hover {
             transform: scale(1.08);
 
-            background: rgba(30, 30, 30, 0.75);
+            background:
+                rgba(30,30,30,0.75);
         }
 
         .sound-button:active {
@@ -368,19 +420,21 @@
             }
         }
 
-        @keyframes carte {
-            from {
-                opacity: 0;
+        @keyframes changement {
+            0% {
+                opacity: 0.4;
 
                 transform:
-                    translateY(10px);
+                    translateY(8px)
+                    scale(0.98);
             }
 
-            to {
+            100% {
                 opacity: 1;
 
                 transform:
-                    translateY(0);
+                    translateY(0)
+                    scale(1);
             }
         }
 
@@ -469,7 +523,7 @@
 <body>
 
     <!-- ==============================
-         VIDEO DE FOND
+         VIDÉO DE FOND
          ============================== -->
 
     <video
@@ -506,7 +560,7 @@
         <h1>¹²³⁴⁵</h1>
 
 
-        <!-- STATUT DISCORD -->
+        <!-- STATUT -->
 
         <div class="activite">
 
@@ -522,9 +576,7 @@
         </div>
 
 
-        <!-- ==============================
-             CARTE ACTIVITÉ
-             ============================== -->
+        <!-- ACTIVITÉ -->
 
         <div
             class="jeu-card"
@@ -533,7 +585,9 @@
             <div
                 class="jeu-icone placeholder"
                 id="jeuIcone">
+
                 🎮
+
             </div>
 
             <div class="jeu-infos">
@@ -565,7 +619,7 @@
 
 
     <!-- ==============================
-         BOUTON SON
+         SON
          ============================== -->
 
     <button
@@ -581,11 +635,11 @@
     <script>
 
         /* =====================================================
-           🔴🔴🔴 TON ID DISCORD EST ICI 🔴🔴🔴
+           🔴🔴🔴 TON ID DISCORD 🔴🔴🔴
 
-           GARDE LES GUILLEMETS !
+           GARDE LES GUILLEMETS.
 
-           REMPLACE UNIQUEMENT TON_ID_DISCORD
+           REMPLACE UNIQUEMENT TON_ID_DISCORD.
 
            Exemple :
 
@@ -597,7 +651,7 @@
 
 
         /* =====================================================
-           COULEURS DES STATUTS
+           COULEURS
            ===================================================== */
 
         const couleurs = {
@@ -614,7 +668,7 @@
 
 
         /* =====================================================
-           NOMS DES STATUTS
+           NOMS
            ===================================================== */
 
         const nomsStatut = {
@@ -631,7 +685,16 @@
 
 
         /* =====================================================
-           RÉCUPÉRATION DISCORD
+           VARIABLES
+           ===================================================== */
+
+        let activiteActuelle = "";
+
+        let debutActivite = null;
+
+
+        /* =====================================================
+           CHARGER DISCORD
            ===================================================== */
 
         async function chargerDiscord() {
@@ -643,7 +706,8 @@
                 );
 
 
-                const result = await response.json();
+                const result =
+                    await response.json();
 
 
                 if (!result.success) {
@@ -655,7 +719,8 @@
                 }
 
 
-                const data = result.data;
+                const data =
+                    result.data;
 
 
                 /* ==============================
@@ -667,16 +732,15 @@
 
 
                 const statutElement =
-                    document.getElementById("statut");
+                    document.getElementById(
+                        "statut"
+                    );
 
 
-                const pointElement =
-                    document.getElementById("point");
-
-
-                statutElement.textContent =
-                    nomsStatut[statut] ||
-                    "HORS LIGNE";
+                const point =
+                    document.getElementById(
+                        "point"
+                    );
 
 
                 const couleur =
@@ -684,15 +748,20 @@
                     couleurs.offline;
 
 
+                statutElement.textContent =
+                    nomsStatut[statut] ||
+                    "HORS LIGNE";
+
+
                 statutElement.style.color =
                     couleur;
 
 
-                pointElement.style.background =
+                point.style.background =
                     couleur;
 
 
-                pointElement.style.boxShadow =
+                point.style.boxShadow =
                     `0 0 8px ${couleur},
                      0 0 18px ${couleur}`;
 
@@ -752,17 +821,55 @@
                         "visible"
                     );
 
+                    activiteActuelle = "";
+
+                    debutActivite = null;
+
                     return;
 
                 }
 
 
                 /* ==============================
-                   NOM DU JEU
+                   DÉTECTER UN CHANGEMENT
+                   ============================== */
+
+                const nouvelleActivite =
+                    `${activite.name || ""}
+                     ${activite.details || ""}
+                     ${activite.state || ""}`;
+
+
+                if (
+                    nouvelleActivite !==
+                    activiteActuelle
+                ) {
+
+                    activiteActuelle =
+                        nouvelleActivite;
+
+                    carte.classList.remove(
+                        "changement"
+                    );
+
+
+                    void carte.offsetWidth;
+
+
+                    carte.classList.add(
+                        "changement"
+                    );
+
+                }
+
+
+                /* ==============================
+                   NOM
                    ============================== */
 
                 nom.textContent =
-                    activite.name || "Activité";
+                    activite.name ||
+                    "Activité";
 
 
                 /* ==============================
@@ -788,7 +895,7 @@
 
 
                 /* ==============================
-                   TEMPS ÉCOULÉ
+                   TEMPS
                    ============================== */
 
                 if (
@@ -796,57 +903,23 @@
                     activite.timestamps.start
                 ) {
 
-                    const debut =
+                    debutActivite =
                         activite.timestamps.start;
 
-
-                    const maintenant =
-                        Date.now();
-
-
-                    const secondes =
-                        Math.floor(
-                            (maintenant - debut) / 1000
-                        );
-
-
-                    const minutes =
-                        Math.floor(
-                            secondes / 60
-                        );
-
-
-                    const heures =
-                        Math.floor(
-                            minutes / 60
-                        );
-
-
-                    if (heures > 0) {
-
-                        const minutesRestantes =
-                            minutes % 60;
-
-
-                        timing.textContent =
-                            `Depuis ${heures}h ${minutesRestantes}min`;
-
-                    } else {
-
-                        timing.textContent =
-                            `Depuis ${minutes} min`;
-
-                    }
+                    afficherTemps(
+                        debutActivite
+                    );
 
                 } else {
 
-                    timing.textContent = "";
+                    timing.textContent =
+                        "";
 
                 }
 
 
                 /* ==============================
-                   IMAGE DE L'ACTIVITÉ
+                   ICÔNE DISCORD
                    ============================== */
 
                 if (
@@ -858,38 +931,27 @@
                         activite.assets.large_image;
 
 
-                    /*
-                     * Certaines images Discord
-                     * utilisent un identifiant
-                     * de ressource.
-                     */
-
                     if (
-                        image.startsWith(
-                            "mp:"
-                        )
+                        image.startsWith("mp:")
                     ) {
 
                         image =
-                            image.replace(
-                                "mp:",
-                                ""
-                            );
+                            image.substring(3);
 
                     }
 
 
                     if (
-                        image.startsWith(
-                            "http"
-                        )
+                        image.startsWith("https://") ||
+                        image.startsWith("http://")
                     ) {
 
                         icone.classList.remove(
                             "placeholder"
                         );
 
-                        icone.innerHTML = "";
+                        icone.innerHTML =
+                            "";
 
                         icone.style.backgroundImage =
                             `url("${image}")`;
@@ -972,14 +1034,93 @@
 
 
         /* =====================================================
-           PREMIÈRE VÉRIFICATION
+           COMPTEUR
+           ===================================================== */
+
+        function afficherTemps(debut) {
+
+            const timing =
+                document.getElementById(
+                    "jeuTiming"
+                );
+
+
+            const maintenant =
+                Date.now();
+
+
+            const secondesTotales =
+                Math.max(
+                    0,
+                    Math.floor(
+                        (maintenant - debut) / 1000
+                    )
+                );
+
+
+            const heures =
+                Math.floor(
+                    secondesTotales / 3600
+                );
+
+
+            const minutes =
+                Math.floor(
+                    (secondesTotales % 3600) / 60
+                );
+
+
+            const secondes =
+                secondesTotales % 60;
+
+
+            if (heures > 0) {
+
+                timing.textContent =
+                    `Depuis ${heures}h ${minutes
+                        .toString()
+                        .padStart(2, "0")}min`;
+
+            } else {
+
+                timing.textContent =
+                    `Depuis ${minutes
+                        .toString()
+                        .padStart(2, "0")}min ${secondes
+                        .toString()
+                        .padStart(2, "0")}s`;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MISE À JOUR DU COMPTEUR
+           ===================================================== */
+
+        setInterval(() => {
+
+            if (debutActivite) {
+
+                afficherTemps(
+                    debutActivite
+                );
+
+            }
+
+        }, 1000);
+
+
+        /* =====================================================
+           PREMIÈRE CHARGE
            ===================================================== */
 
         chargerDiscord();
 
 
         /* =====================================================
-           ACTUALISATION TOUTES LES 10 SECONDES
+           ACTUALISATION DISCORD
            ===================================================== */
 
         setInterval(
