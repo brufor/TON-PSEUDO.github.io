@@ -39,11 +39,7 @@
         .overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(
-                circle at center,
-                rgba(0, 0, 0, 0.02),
-                rgba(0, 0, 0, 0.42)
-            );
+            background: rgba(0, 0, 0, 0.25);
             z-index: 1;
             pointer-events: none;
         }
@@ -70,7 +66,7 @@
             position: absolute;
             inset: -18px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.20);
+            background: rgba(255, 255, 255, 0.2);
             filter: blur(22px);
             animation: halo 3s ease-in-out infinite;
         }
@@ -82,15 +78,10 @@
             border-radius: 50%;
             object-fit: cover;
             display: block;
-            border: 3px solid rgba(255, 255, 255, 0.95);
+            border: 3px solid white;
             box-shadow:
                 0 0 25px rgba(0, 0, 0, 0.9),
                 0 0 45px rgba(255, 255, 255, 0.12);
-            transition: transform 0.35s ease;
-        }
-
-        .photo-profil:hover {
-            transform: scale(1.05);
         }
 
         h1 {
@@ -139,12 +130,6 @@
             cursor: pointer;
             z-index: 10;
             backdrop-filter: blur(12px);
-            transition: 0.25s ease;
-        }
-
-        .sound-button:hover {
-            transform: scale(1.1);
-            background: rgba(35, 35, 35, 0.75);
         }
 
         @keyframes apparition {
@@ -197,13 +182,6 @@
             .activite {
                 font-size: 14px;
             }
-
-            .sound-button {
-                width: 52px;
-                height: 52px;
-                right: 18px;
-                bottom: 18px;
-            }
         }
     </style>
 </head>
@@ -218,7 +196,7 @@
         playsinline
         preload="auto">
 
-        <source src="clips/clip.mp4" type="video/mp4">
+        <source src="clip.mp4" type="video/mp4">
 
     </video>
 
@@ -229,7 +207,7 @@
         <div class="photo-container">
             <img
                 class="photo-profil"
-                src="static/profil.png"
+                src="profil.png"
                 alt="Photo de profil">
         </div>
 
@@ -262,4 +240,3 @@
 
 </body>
 </html>
-
