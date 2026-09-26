@@ -250,23 +250,27 @@
 
     <script>
 
-        /*
-         * ==========================================
-         * TON ID DISCORD
-         * ==========================================
-         *
-         * REMPLACE UNIQUEMENT TON_ID_DISCORD
-         * PAR TON identifiant Discord.
-         */
+        /* ==================================================
+           🔴🔴🔴 TON ID DISCORD EST ICI 🔴🔴🔴
 
-        const DISCORD_ID = "TON_ID_DISCORD";
+           REMPLACE SEULEMENT :
+
+           TON_ID_DISCORD
+
+           PAR TON ID DISCORD.
+
+           EXEMPLE :
+
+           const DISCORD_ID = "123456789012345678";
+
+           ================================================== */
+
+        const DISCORD_ID = "TON_ID_DISCORD"; // 👈 METS TON ID ICI
 
 
-        /*
-         * ==========================================
-         * COULEURS DES STATUTS
-         * ==========================================
-         */
+        /* ==================================================
+           COULEURS DES STATUTS
+           ================================================== */
 
         const couleurs = {
             online: "#00ff88",
@@ -276,11 +280,9 @@
         };
 
 
-        /*
-         * ==========================================
-         * TEXTE DES STATUTS
-         * ==========================================
-         */
+        /* ==================================================
+           NOMS DES STATUTS
+           ================================================== */
 
         const nomsStatut = {
             online: "EN LIGNE",
@@ -290,11 +292,9 @@
         };
 
 
-        /*
-         * ==========================================
-         * RÉCUPÉRATION DISCORD
-         * ==========================================
-         */
+        /* ==================================================
+           RÉCUPÉRATION DU STATUT DISCORD
+           ================================================== */
 
         async function chargerDiscord() {
 
@@ -314,16 +314,14 @@
 
                 const statut = data.discord_status;
 
-                /*
-                 * Afficher le statut
-                 */
+
+                /* AFFICHER LE STATUT */
 
                 document.getElementById("statut").textContent =
                     nomsStatut[statut] || "HORS LIGNE";
 
-                /*
-                 * Changer la couleur
-                 */
+
+                /* CHANGER LA COULEUR */
 
                 const couleur =
                     couleurs[statut] || couleurs.offline;
@@ -338,9 +336,7 @@
                     `0 0 8px ${couleur}, 0 0 18px ${couleur}`;
 
 
-                /*
-                 * Chercher une activité
-                 */
+                /* CHERCHER UNE ACTIVITÉ */
 
                 const activites = data.activities || [];
 
@@ -349,9 +345,7 @@
                 );
 
 
-                /*
-                 * Afficher le jeu
-                 */
+                /* AFFICHER LE JEU */
 
                 const jeu = document.getElementById("jeu");
 
@@ -395,25 +389,18 @@
         }
 
 
-        /*
-         * ==========================================
-         * ACTUALISATION
-         * ==========================================
-         *
-         * On vérifie régulièrement les changements
-         * de présence Discord.
-         */
+        /* ==================================================
+           ACTUALISATION DU STATUT
+           ================================================== */
 
         chargerDiscord();
 
         setInterval(chargerDiscord, 10000);
 
 
-        /*
-         * ==========================================
-         * BOUTON SON
-         * ==========================================
-         */
+        /* ==================================================
+           BOUTON SON
+           ================================================== */
 
         function toggleSound() {
 
