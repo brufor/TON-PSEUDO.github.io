@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -116,6 +117,15 @@
             animation: pulse 1.7s ease-in-out infinite;
         }
 
+        .jeu {
+            margin-top: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            color: white;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
+            max-width: 90vw;
+        }
+
         .sound-button {
             position: fixed;
             right: 25px;
@@ -182,12 +192,17 @@
             .activite {
                 font-size: 14px;
             }
+
+            .jeu {
+                font-size: 13px;
+            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- VIDEO DE FOND -->
     <video
         class="video-background"
         autoplay
@@ -197,11 +212,11 @@
         preload="auto">
 
         <source src="clip.mp4" type="video/mp4">
-
     </video>
 
     <div class="overlay"></div>
 
+    <!-- PROFIL -->
     <main class="profil">
 
         <div class="photo-container">
@@ -213,13 +228,18 @@
 
         <h1>¹²³⁴⁵</h1>
 
+        <!-- STATUT DISCORD -->
         <div class="activite">
-            <span class="point"></span>
-            <span>EN LIGNE</span>
+            <span class="point" id="point"></span>
+            <span id="statut">CHARGEMENT...</span>
         </div>
+
+        <!-- ACTIVITÉ / JEU -->
+        <div class="jeu" id="jeu"></div>
 
     </main>
 
+    <!-- BOUTON SON -->
     <button
         class="sound-button"
         onclick="toggleSound()"
@@ -227,16 +247,190 @@
         🔇
     </button>
 
+
     <script>
+
+        /*
+         * ==========================================
+         * TON ID DISCORD
+         * ==========================================
+         *
+         * REMPLACE UNIQUEMENT TON_ID_DISCORD
+         * PAR TON identifiant Discord.
+         */
+
+        const DISCORD_ID = "TON_ID_DISCORD";
+
+
+        /*
+         * ==========================================
+         * COULEURS DES STATUTS
+         * ==========================================
+         */
+
+        const couleurs = {
+            online: "#00ff88",
+            idle: "#ffaa00",
+            dnd: "#ff4444",
+            offline: "#777777"
+        };
+
+
+        /*
+         * ==========================================
+         * TEXTE DES STATUTS
+         * ==========================================
+         */
+
+        const nomsStatut = {
+            online: "EN LIGNE",
+            idle: "ABSENT",
+            dnd: "NE PAS DÉRANGER",
+            offline: "HORS LIGNE"
+        };
+
+
+        /*
+         * ==========================================
+         * RÉCUPÉRATION DISCORD
+         * ==========================================
+         */
+
+        async function chargerDiscord() {
+
+            try {
+
+                const response = await fetch(
+                    `https://api.lanyard.rest/v1/users/${DISCORD_ID}`
+                );
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error("Impossible de récupérer Discord");
+                }
+
+                const data = result.data;
+
+                const statut = data.discord_status;
+
+                /*
+                 * Afficher le statut
+                 */
+
+                document.getElementById("statut").textContent =
+                    nomsStatut[statut] || "HORS LIGNE";
+
+                /*
+                 * Changer la couleur
+                 */
+
+                const couleur =
+                    couleurs[statut] || couleurs.offline;
+
+                document.getElementById("statut").style.color =
+                    couleur;
+
+                document.getElementById("point").style.background =
+                    couleur;
+
+                document.getElementById("point").style.boxShadow =
+                    `0 0 8px ${couleur}, 0 0 18px ${couleur}`;
+
+
+                /*
+                 * Chercher une activité
+                 */
+
+                const activites = data.activities || [];
+
+                const activite = activites.find(
+                    activity => activity.type === 0
+                );
+
+
+                /*
+                 * Afficher le jeu
+                 */
+
+                const jeu = document.getElementById("jeu");
+
+                if (activite) {
+
+                    if (activite.details) {
+
+                        jeu.textContent =
+                            `🎮 ${activite.name} — ${activite.details}`;
+
+                    } else {
+
+                        jeu.textContent =
+                            `🎮 ${activite.name}`;
+
+                    }
+
+                } else {
+
+                    jeu.textContent = "";
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                document.getElementById("statut").textContent =
+                    "HORS LIGNE";
+
+                document.getElementById("statut").style.color =
+                    couleurs.offline;
+
+                document.getElementById("point").style.background =
+                    couleurs.offline;
+
+                document.getElementById("jeu").textContent = "";
+
+            }
+
+        }
+
+
+        /*
+         * ==========================================
+         * ACTUALISATION
+         * ==========================================
+         *
+         * On vérifie régulièrement les changements
+         * de présence Discord.
+         */
+
+        chargerDiscord();
+
+        setInterval(chargerDiscord, 10000);
+
+
+        /*
+         * ==========================================
+         * BOUTON SON
+         * ==========================================
+         */
+
         function toggleSound() {
-            const video = document.querySelector(".video-background");
-            const button = document.querySelector(".sound-button");
+
+            const video =
+                document.querySelector(".video-background");
+
+            const button =
+                document.querySelector(".sound-button");
 
             video.muted = !video.muted;
 
-            button.textContent = video.muted ? "🔇" : "🔊";
+            button.textContent =
+                video.muted ? "🔇" : "🔊";
         }
+
     </script>
 
 </body>
 </html>
+```
