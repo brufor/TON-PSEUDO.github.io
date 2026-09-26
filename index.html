@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>¹²³⁴⁵</title>
 
     <style>
@@ -11,7 +12,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             width: 100%;
             height: 100%;
             margin: 0;
@@ -22,10 +24,11 @@
             background: #000;
             color: white;
             font-family: Arial, Helvetica, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
+
+        /* ==============================
+           VIDEO
+           ============================== */
 
         .video-background {
             position: fixed;
@@ -40,145 +43,387 @@
         .overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.25);
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(0, 0, 0, 0.10),
+                    rgba(0, 0, 0, 0.60)
+                );
             z-index: 1;
             pointer-events: none;
         }
 
+        /* ==============================
+           PROFIL
+           ============================== */
+
         .profil {
             position: relative;
             z-index: 2;
+
+            width: min(92vw, 430px);
+
             display: flex;
             flex-direction: column;
             align-items: center;
+
             text-align: center;
+
             animation: apparition 1s ease;
         }
 
+        /* ==============================
+           PHOTO
+           ============================== */
+
         .photo-container {
             position: relative;
+
             width: 150px;
             height: 150px;
+
             margin-bottom: 22px;
         }
 
         .photo-container::before {
             content: "";
+
             position: absolute;
-            inset: -18px;
+
+            inset: -20px;
+
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            filter: blur(22px);
+
+            background: rgba(255, 255, 255, 0.18);
+
+            filter: blur(25px);
+
             animation: halo 3s ease-in-out infinite;
         }
 
         .photo-profil {
             position: relative;
+
             width: 150px;
             height: 150px;
+
             border-radius: 50%;
+
             object-fit: cover;
+
             display: block;
-            border: 3px solid white;
+
+            border: 3px solid rgba(255, 255, 255, 0.95);
+
             box-shadow:
                 0 0 25px rgba(0, 0, 0, 0.9),
-                0 0 45px rgba(255, 255, 255, 0.12);
+                0 0 55px rgba(255, 255, 255, 0.18);
         }
+
+        /* ==============================
+           NOM
+           ============================== */
 
         h1 {
             margin: 0;
+
             font-size: 46px;
+
             font-weight: 700;
+
             letter-spacing: 3px;
+
             text-shadow:
-                0 0 12px rgba(255, 255, 255, 0.25),
-                0 4px 18px rgba(0, 0, 0, 0.95);
+                0 0 15px rgba(255, 255, 255, 0.25),
+                0 5px 25px rgba(0, 0, 0, 1);
         }
+
+        /* ==============================
+           STATUT
+           ============================== */
 
         .activite {
             margin-top: 14px;
+
             display: flex;
+
             align-items: center;
+
             gap: 9px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #00ff88;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            text-shadow:
+                0 2px 12px rgba(0, 0, 0, 1);
         }
 
         .point {
             width: 9px;
             height: 9px;
+
             border-radius: 50%;
-            background: #00ff88;
+
+            background: #777;
+
             box-shadow:
-                0 0 8px #00ff88,
-                0 0 18px rgba(0, 255, 136, 0.65);
+                0 0 8px #777,
+                0 0 18px rgba(255, 255, 255, 0.25);
+
             animation: pulse 1.7s ease-in-out infinite;
         }
 
-        .jeu {
-            margin-top: 10px;
-            font-size: 15px;
-            font-weight: 500;
-            color: white;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.95);
-            max-width: 90vw;
+        /* ==============================
+           CARTE ACTIVITÉ
+           ============================== */
+
+        .jeu-card {
+            width: 100%;
+
+            margin-top: 18px;
+
+            padding: 14px 16px;
+
+            display: none;
+
+            align-items: center;
+
+            gap: 13px;
+
+            text-align: left;
+
+            border-radius: 16px;
+
+            background: rgba(15, 15, 15, 0.52);
+
+            border: 1px solid rgba(255, 255, 255, 0.14);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+            animation: carte 0.5s ease;
         }
+
+        .jeu-card.visible {
+            display: flex;
+        }
+
+        /* ==============================
+           ICONE JEU
+           ============================== */
+
+        .jeu-icone {
+            width: 55px;
+            height: 55px;
+
+            flex-shrink: 0;
+
+            border-radius: 12px;
+
+            object-fit: cover;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .jeu-icone.placeholder {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+        /* ==============================
+           INFORMATIONS JEU
+           ============================== */
+
+        .jeu-infos {
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+        }
+
+        .jeu-label {
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.3px;
+
+            color: rgba(255, 255, 255, 0.48);
+
+            font-weight: 700;
+        }
+
+        .jeu-nom {
+            font-size: 16px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .jeu-details {
+            font-size: 13px;
+
+            color: rgba(255, 255, 255, 0.72);
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .jeu-timing {
+            margin-top: 2px;
+
+            font-size: 12px;
+
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        /* ==============================
+           BOUTON SON
+           ============================== */
 
         .sound-button {
             position: fixed;
+
             right: 25px;
             bottom: 25px;
+
             width: 58px;
             height: 58px;
-            border: 1px solid rgba(255, 255, 255, 0.22);
+
+            border: 1px solid rgba(255, 255, 255, 0.20);
+
             border-radius: 50%;
+
             background: rgba(15, 15, 15, 0.55);
+
             color: white;
+
             font-size: 23px;
+
             cursor: pointer;
+
             z-index: 10;
-            backdrop-filter: blur(12px);
+
+            backdrop-filter: blur(14px);
+
+            -webkit-backdrop-filter: blur(14px);
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
         }
+
+        .sound-button:hover {
+            transform: scale(1.08);
+
+            background: rgba(30, 30, 30, 0.75);
+        }
+
+        .sound-button:active {
+            transform: scale(0.94);
+        }
+
+        /* ==============================
+           ANIMATIONS
+           ============================== */
 
         @keyframes apparition {
             from {
                 opacity: 0;
-                transform: translateY(25px) scale(0.96);
+
+                transform:
+                    translateY(25px)
+                    scale(0.96);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        @keyframes carte {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
             }
         }
 
         @keyframes halo {
-            0%, 100% {
+            0%,
+            100% {
                 transform: scale(0.92);
+
                 opacity: 0.45;
             }
 
             50% {
                 transform: scale(1.08);
+
                 opacity: 0.85;
             }
         }
 
         @keyframes pulse {
-            0%, 100% {
+            0%,
+            100% {
                 transform: scale(1);
+
                 opacity: 1;
             }
 
             50% {
                 transform: scale(1.35);
+
                 opacity: 0.65;
             }
         }
 
+        /* ==============================
+           MOBILE
+           ============================== */
+
         @media (max-width: 600px) {
+
+            .profil {
+                width: 88vw;
+            }
+
             .photo-container,
             .photo-profil {
                 width: 115px;
@@ -193,8 +438,29 @@
                 font-size: 14px;
             }
 
-            .jeu {
-                font-size: 13px;
+            .jeu-card {
+                padding: 12px;
+            }
+
+            .jeu-icone {
+                width: 48px;
+                height: 48px;
+            }
+
+            .jeu-nom {
+                font-size: 14px;
+            }
+
+            .jeu-details {
+                font-size: 12px;
+            }
+
+            .sound-button {
+                width: 52px;
+                height: 52px;
+
+                right: 18px;
+                bottom: 18px;
             }
         }
     </style>
@@ -202,7 +468,10 @@
 
 <body>
 
-    <!-- VIDEO DE FOND -->
+    <!-- ==============================
+         VIDEO DE FOND
+         ============================== -->
+
     <video
         class="video-background"
         autoplay
@@ -212,89 +481,158 @@
         preload="auto">
 
         <source src="clip.mp4" type="video/mp4">
+
     </video>
 
     <div class="overlay"></div>
 
-    <!-- PROFIL -->
+
+    <!-- ==============================
+         PROFIL
+         ============================== -->
+
     <main class="profil">
 
         <div class="photo-container">
+
             <img
                 class="photo-profil"
                 src="profil.png"
                 alt="Photo de profil">
+
         </div>
+
 
         <h1>¹²³⁴⁵</h1>
 
+
         <!-- STATUT DISCORD -->
+
         <div class="activite">
-            <span class="point" id="point"></span>
-            <span id="statut">CHARGEMENT...</span>
+
+            <span
+                class="point"
+                id="point">
+            </span>
+
+            <span id="statut">
+                CHARGEMENT...
+            </span>
+
         </div>
 
-        <!-- ACTIVITÉ / JEU -->
-        <div class="jeu" id="jeu"></div>
+
+        <!-- ==============================
+             CARTE ACTIVITÉ
+             ============================== -->
+
+        <div
+            class="jeu-card"
+            id="jeuCard">
+
+            <div
+                class="jeu-icone placeholder"
+                id="jeuIcone">
+                🎮
+            </div>
+
+            <div class="jeu-infos">
+
+                <div class="jeu-label">
+                    ACTIVITÉ DISCORD
+                </div>
+
+                <div
+                    class="jeu-nom"
+                    id="jeuNom">
+                </div>
+
+                <div
+                    class="jeu-details"
+                    id="jeuDetails">
+                </div>
+
+                <div
+                    class="jeu-timing"
+                    id="jeuTiming">
+                </div>
+
+            </div>
+
+        </div>
 
     </main>
 
-    <!-- BOUTON SON -->
+
+    <!-- ==============================
+         BOUTON SON
+         ============================== -->
+
     <button
         class="sound-button"
         onclick="toggleSound()"
         aria-label="Activer ou couper le son">
+
         🔇
+
     </button>
 
 
     <script>
 
-        /* ==================================================
+        /* =====================================================
            🔴🔴🔴 TON ID DISCORD EST ICI 🔴🔴🔴
 
-           REMPLACE SEULEMENT :
+           GARDE LES GUILLEMETS !
 
-           TON_ID_DISCORD
+           REMPLACE UNIQUEMENT TON_ID_DISCORD
 
-           PAR TON ID DISCORD.
-
-           EXEMPLE :
+           Exemple :
 
            const DISCORD_ID = "123456789012345678";
 
-           ================================================== */
+           ===================================================== */
 
-        const DISCORD_ID = "1303798212540239923"; // 👈 METS TON ID ICI
+        const DISCORD_ID = "1303798212540239923";
 
 
-        /* ==================================================
+        /* =====================================================
            COULEURS DES STATUTS
-           ================================================== */
+           ===================================================== */
 
         const couleurs = {
+
             online: "#00ff88",
+
             idle: "#ffaa00",
+
             dnd: "#ff4444",
+
             offline: "#777777"
+
         };
 
 
-        /* ==================================================
+        /* =====================================================
            NOMS DES STATUTS
-           ================================================== */
+           ===================================================== */
 
         const nomsStatut = {
+
             online: "EN LIGNE",
+
             idle: "ABSENT",
+
             dnd: "NE PAS DÉRANGER",
+
             offline: "HORS LIGNE"
+
         };
 
 
-        /* ==================================================
-           RÉCUPÉRATION DU STATUT DISCORD
-           ================================================== */
+        /* =====================================================
+           RÉCUPÉRATION DISCORD
+           ===================================================== */
 
         async function chargerDiscord() {
 
@@ -304,116 +642,379 @@
                     `https://api.lanyard.rest/v1/users/${DISCORD_ID}`
                 );
 
+
                 const result = await response.json();
 
+
                 if (!result.success) {
-                    throw new Error("Impossible de récupérer Discord");
+
+                    throw new Error(
+                        "Impossible de récupérer Discord"
+                    );
+
                 }
+
 
                 const data = result.data;
 
-                const statut = data.discord_status;
+
+                /* ==============================
+                   STATUT
+                   ============================== */
+
+                const statut =
+                    data.discord_status;
 
 
-                /* AFFICHER LE STATUT */
-
-                document.getElementById("statut").textContent =
-                    nomsStatut[statut] || "HORS LIGNE";
+                const statutElement =
+                    document.getElementById("statut");
 
 
-                /* CHANGER LA COULEUR */
+                const pointElement =
+                    document.getElementById("point");
+
+
+                statutElement.textContent =
+                    nomsStatut[statut] ||
+                    "HORS LIGNE";
+
 
                 const couleur =
-                    couleurs[statut] || couleurs.offline;
+                    couleurs[statut] ||
+                    couleurs.offline;
 
-                document.getElementById("statut").style.color =
+
+                statutElement.style.color =
                     couleur;
 
-                document.getElementById("point").style.background =
+
+                pointElement.style.background =
                     couleur;
 
-                document.getElementById("point").style.boxShadow =
-                    `0 0 8px ${couleur}, 0 0 18px ${couleur}`;
+
+                pointElement.style.boxShadow =
+                    `0 0 8px ${couleur},
+                     0 0 18px ${couleur}`;
 
 
-                /* CHERCHER UNE ACTIVITÉ */
+                /* ==============================
+                   ACTIVITÉS
+                   ============================== */
 
-                const activites = data.activities || [];
-
-                const activite = activites.find(
-                    activity => activity.type === 0
-                );
+                const activites =
+                    data.activities || [];
 
 
-                /* AFFICHER LE JEU */
+                const activite =
+                    activites.find(
+                        activity =>
+                            activity.type === 0
+                    );
 
-                const jeu = document.getElementById("jeu");
 
-                if (activite) {
+                const carte =
+                    document.getElementById(
+                        "jeuCard"
+                    );
 
-                    if (activite.details) {
 
-                        jeu.textContent =
-                            `🎮 ${activite.name} — ${activite.details}`;
+                const nom =
+                    document.getElementById(
+                        "jeuNom"
+                    );
+
+
+                const details =
+                    document.getElementById(
+                        "jeuDetails"
+                    );
+
+
+                const timing =
+                    document.getElementById(
+                        "jeuTiming"
+                    );
+
+
+                const icone =
+                    document.getElementById(
+                        "jeuIcone"
+                    );
+
+
+                /* ==============================
+                   AUCUNE ACTIVITÉ
+                   ============================== */
+
+                if (!activite) {
+
+                    carte.classList.remove(
+                        "visible"
+                    );
+
+                    return;
+
+                }
+
+
+                /* ==============================
+                   NOM DU JEU
+                   ============================== */
+
+                nom.textContent =
+                    activite.name || "Activité";
+
+
+                /* ==============================
+                   DÉTAILS
+                   ============================== */
+
+                if (activite.details) {
+
+                    details.textContent =
+                        activite.details;
+
+                } else if (activite.state) {
+
+                    details.textContent =
+                        activite.state;
+
+                } else {
+
+                    details.textContent =
+                        "En cours";
+
+                }
+
+
+                /* ==============================
+                   TEMPS ÉCOULÉ
+                   ============================== */
+
+                if (
+                    activite.timestamps &&
+                    activite.timestamps.start
+                ) {
+
+                    const debut =
+                        activite.timestamps.start;
+
+
+                    const maintenant =
+                        Date.now();
+
+
+                    const secondes =
+                        Math.floor(
+                            (maintenant - debut) / 1000
+                        );
+
+
+                    const minutes =
+                        Math.floor(
+                            secondes / 60
+                        );
+
+
+                    const heures =
+                        Math.floor(
+                            minutes / 60
+                        );
+
+
+                    if (heures > 0) {
+
+                        const minutesRestantes =
+                            minutes % 60;
+
+
+                        timing.textContent =
+                            `Depuis ${heures}h ${minutesRestantes}min`;
 
                     } else {
 
-                        jeu.textContent =
-                            `🎮 ${activite.name}`;
+                        timing.textContent =
+                            `Depuis ${minutes} min`;
 
                     }
 
                 } else {
 
-                    jeu.textContent = "";
+                    timing.textContent = "";
 
                 }
+
+
+                /* ==============================
+                   IMAGE DE L'ACTIVITÉ
+                   ============================== */
+
+                if (
+                    activite.assets &&
+                    activite.assets.large_image
+                ) {
+
+                    let image =
+                        activite.assets.large_image;
+
+
+                    /*
+                     * Certaines images Discord
+                     * utilisent un identifiant
+                     * de ressource.
+                     */
+
+                    if (
+                        image.startsWith(
+                            "mp:"
+                        )
+                    ) {
+
+                        image =
+                            image.replace(
+                                "mp:",
+                                ""
+                            );
+
+                    }
+
+
+                    if (
+                        image.startsWith(
+                            "http"
+                        )
+                    ) {
+
+                        icone.classList.remove(
+                            "placeholder"
+                        );
+
+                        icone.innerHTML = "";
+
+                        icone.style.backgroundImage =
+                            `url("${image}")`;
+
+                        icone.style.backgroundSize =
+                            "cover";
+
+                        icone.style.backgroundPosition =
+                            "center";
+
+                    } else {
+
+                        icone.classList.add(
+                            "placeholder"
+                        );
+
+                        icone.style.backgroundImage =
+                            "";
+
+                        icone.innerHTML =
+                            "🎮";
+
+                    }
+
+                } else {
+
+                    icone.classList.add(
+                        "placeholder"
+                    );
+
+                    icone.style.backgroundImage =
+                        "";
+
+                    icone.innerHTML =
+                        "🎮";
+
+                }
+
+
+                /* ==============================
+                   AFFICHER LA CARTE
+                   ============================== */
+
+                carte.classList.add(
+                    "visible"
+                );
 
             } catch (error) {
 
                 console.error(error);
 
-                document.getElementById("statut").textContent =
+
+                document.getElementById(
+                    "statut"
+                ).textContent =
                     "HORS LIGNE";
 
-                document.getElementById("statut").style.color =
+
+                document.getElementById(
+                    "statut"
+                ).style.color =
                     couleurs.offline;
 
-                document.getElementById("point").style.background =
+
+                document.getElementById(
+                    "point"
+                ).style.background =
                     couleurs.offline;
 
-                document.getElementById("jeu").textContent = "";
+
+                document.getElementById(
+                    "jeuCard"
+                ).classList.remove(
+                    "visible"
+                );
 
             }
 
         }
 
 
-        /* ==================================================
-           ACTUALISATION DU STATUT
-           ================================================== */
+        /* =====================================================
+           PREMIÈRE VÉRIFICATION
+           ===================================================== */
 
         chargerDiscord();
 
-        setInterval(chargerDiscord, 10000);
+
+        /* =====================================================
+           ACTUALISATION TOUTES LES 10 SECONDES
+           ===================================================== */
+
+        setInterval(
+            chargerDiscord,
+            10000
+        );
 
 
-        /* ==================================================
+        /* =====================================================
            BOUTON SON
-           ================================================== */
+           ===================================================== */
 
         function toggleSound() {
 
             const video =
-                document.querySelector(".video-background");
+                document.querySelector(
+                    ".video-background"
+                );
+
 
             const button =
-                document.querySelector(".sound-button");
+                document.querySelector(
+                    ".sound-button"
+                );
 
-            video.muted = !video.muted;
+
+            video.muted =
+                !video.muted;
+
 
             button.textContent =
-                video.muted ? "🔇" : "🔊";
+                video.muted
+                    ? "🔇"
+                    : "🔊";
+
         }
 
     </script>
