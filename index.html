@@ -1,1881 +1,1044 @@
 ```html
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<title>brufor</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    <title>¹²³⁴⁵</title>
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    background: black;
+    cursor: none;
+}
 
+/* VIDEO */
 
-    <style>
+#background-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -5;
 
-        * {
-            box-sizing: border-box;
-        }
+    filter:
+        brightness(0.92)
+        contrast(1.08)
+        saturate(1.08);
 
+    transform: scale(1.01);
+}
 
-        html,
-        body {
+/* DARK OVERLAY */
 
-            width: 100%;
-            height: 100%;
+.overlay {
+    position: fixed;
+    inset: 0;
 
-            margin: 0;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,0,0,0.08),
+            rgba(0,0,0,0.55)
+        );
 
-        }
+    z-index: -4;
+}
 
+/* PARTICLES */
 
-        body {
+#particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
 
-            overflow: hidden;
+/* PROFILE */
 
-            background: #000;
+.profile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
-            color: white;
+    transform: translate(-50%, -50%);
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+    width: min(420px, 90vw);
 
-            cursor: none;
+    padding: 35px 25px;
 
-        }
+    text-align: center;
 
+    color: white;
 
-        /* =====================================
-           VIDÉO
-           ===================================== */
+    background: rgba(0, 0, 0, 0.30);
 
-        .video-background {
+    border: 1px solid rgba(255,255,255,0.12);
 
-            position: fixed;
+    border-radius: 24px;
 
-            inset: 0;
+    backdrop-filter: blur(12px);
 
-            width: 100%;
-            height: 100%;
+    box-shadow:
+        0 0 40px rgba(0,0,0,0.35),
+        inset 0 0 30px rgba(255,255,255,0.02);
 
-            object-fit: cover;
+    z-index: 5;
 
-            z-index: 0;
+    animation: appear 1s ease;
+}
 
-            filter:
-                brightness(0.90)
-                contrast(1.10)
-                saturate(1.08);
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -47%) scale(0.95);
+    }
 
-            transform: scale(1.015);
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
 
-        }
+/* PROFILE IMAGE */
 
+.photo-profil {
+    width: 115px;
+    height: 115px;
 
-        .overlay {
+    object-fit: cover;
 
-            position: fixed;
+    border-radius: 50%;
 
-            inset: 0;
+    border: 3px solid rgba(255,255,255,0.85);
 
-            z-index: 1;
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.25),
+        0 0 50px rgba(255,255,255,0.08);
 
-            pointer-events: none;
+    transition: 0.35s ease;
+}
 
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(0,0,0,0.05),
-                    rgba(0,0,0,0.48)
-                );
+.photo-profil:hover {
+    transform:
+        scale(1.08)
+        rotate(2deg);
 
-        }
+    box-shadow:
+        0 0 30px rgba(255,255,255,0.5),
+        0 0 80px rgba(255,255,255,0.15);
+}
 
+/* NAME */
 
-        /* =====================================
-           PARTICULES
-           ===================================== */
+h1 {
+    margin-top: 18px;
 
-        #particles {
+    font-size: 30px;
 
-            position: fixed;
+    letter-spacing: 2px;
 
-            inset: 0;
+    transition: 0.25s ease;
 
-            width: 100%;
-            height: 100%;
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.15);
+}
 
-            z-index: 1;
+h1:hover {
+    letter-spacing: 4px;
+}
 
-            pointer-events: none;
+/* STATUS */
 
-        }
+.status {
+    display: flex;
 
+    justify-content: center;
+    align-items: center;
 
-        /* =====================================
-           CURSEUR ÉPÉE
-           ===================================== */
+    gap: 8px;
 
-        #sword-cursor {
+    margin-top: 10px;
 
-            position: fixed;
+    font-size: 13px;
 
-            width: 70px;
-            height: 70px;
+    color: rgba(255,255,255,0.75);
+}
 
-            left: 0;
-            top: 0;
+.status-dot {
+    width: 10px;
+    height: 10px;
 
-            z-index: 999999;
+    border-radius: 50%;
 
-            pointer-events: none;
+    background: #777;
 
-            transform:
-                translate(-12px,-12px)
-                rotate(-45deg);
+    box-shadow: 0 0 10px currentColor;
 
-            filter:
-                drop-shadow(0 0 5px white)
-                drop-shadow(0 0 12px #7fc8ff)
-                drop-shadow(0 0 24px #258cff);
+    transition: 0.3s ease;
+}
 
-        }
+/* ACTIVITY */
 
+.activity {
+    margin-top: 20px;
 
-        .sword-blade {
+    padding: 14px;
 
-            position: absolute;
+    border-radius: 15px;
 
-            left: 31px;
-            top: 3px;
+    background: rgba(255,255,255,0.06);
 
-            width: 8px;
-            height: 48px;
+    border: 1px solid rgba(255,255,255,0.08);
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #555,
-                    #fff,
-                    #dcecff,
-                    #777
-                );
+    text-align: left;
 
-            clip-path:
-                polygon(
-                    20% 0,
-                    80% 0,
-                    100% 88%,
-                    50% 100%,
-                    0 88%
-                );
+    display: none;
+}
 
-        }
+.activity-title {
+    font-size: 11px;
 
+    text-transform: uppercase;
 
-        .sword-blade::after {
+    letter-spacing: 1px;
 
-            content: "";
+    opacity: 0.55;
 
-            position: absolute;
+    margin-bottom: 5px;
+}
 
-            left: 2px;
-            top: 4px;
+.activity-name {
+    font-size: 15px;
 
-            width: 2px;
-            height: 34px;
+    font-weight: bold;
+}
 
-            background: white;
+.activity-time {
+    margin-top: 4px;
 
-        }
+    font-size: 12px;
 
+    opacity: 0.6;
+}
 
-        .sword-guard {
+/* BADGES */
 
-            position: absolute;
+.badges {
+    display: flex;
 
-            left: 17px;
-            top: 44px;
+    justify-content: center;
 
-            width: 36px;
-            height: 6px;
+    flex-wrap: wrap;
 
-            border-radius: 8px;
+    gap: 8px;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #555,
-                    #fff,
-                    #777
-                );
+    margin-top: 20px;
+}
 
-            box-shadow:
-                0 0 8px white;
+.badge {
+    padding: 6px 10px;
 
-        }
+    border-radius: 10px;
 
+    background: rgba(255,255,255,0.08);
 
-        .sword-handle {
+    border: 1px solid rgba(255,255,255,0.08);
 
-            position: absolute;
+    font-size: 11px;
 
-            left: 31px;
-            top: 49px;
+    transition: 0.2s ease;
+}
 
-            width: 8px;
-            height: 17px;
+.badge:hover {
+    background: rgba(255,255,255,0.15);
 
-            border-radius: 3px;
+    transform: translateY(-2px);
+}
 
-            background:
-                repeating-linear-gradient(
-                    135deg,
-                    #111 0px,
-                    #111 3px,
-                    #aaa 4px,
-                    #111 6px
-                );
+/* SOUND BUTTON */
 
-        }
+.sound-button {
+    position: fixed;
 
+    top: 20px;
+    right: 20px;
 
-        .sword-pommel {
+    width: 42px;
+    height: 42px;
 
-            position: absolute;
+    border-radius: 50%;
 
-            left: 29px;
-            top: 63px;
+    background: rgba(0,0,0,0.4);
 
-            width: 12px;
-            height: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
 
-            border-radius: 50%;
+    color: white;
 
-            background:
-                radial-gradient(
-                    circle at 35% 30%,
-                    white,
-                    #aaa 45%,
-                    #444
-                );
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            box-shadow:
-                0 0 10px white;
+    font-size: 18px;
 
-        }
+    cursor: none;
 
+    backdrop-filter: blur(10px);
 
-        /* =====================================
-           TRAÎNÉE CURSEUR
-           ===================================== */
+    z-index: 20;
 
-        .cursor-trail {
+    transition: 0.25s ease;
+}
 
-            position: fixed;
+.sound-button:hover {
+    transform: scale(1.1);
 
-            width: 7px;
-            height: 7px;
+    background: rgba(255,255,255,0.12);
+}
 
-            border-radius: 50%;
+/* COMPTEUR DE VUES */
 
-            background: white;
+#views {
+    position: fixed;
 
-            z-index: 999998;
+    left: 20px;
+    bottom: 20px;
 
-            pointer-events: none;
+    padding: 8px 14px;
 
-            box-shadow:
-                0 0 8px white,
-                0 0 18px #48aaff;
+    border-radius: 12px;
 
-            animation:
-                trailFade 0.5s forwards;
+    background: rgba(0,0,0,0.45);
 
-        }
+    backdrop-filter: blur(10px);
 
+    color: white;
 
-        @keyframes trailFade {
+    font-size: 13px;
 
-            from {
+    font-weight: 600;
 
-                opacity: .85;
+    border: 1px solid rgba(255,255,255,0.12);
 
-                transform:
-                    scale(1);
+    box-shadow:
+        0 0 15px rgba(0,0,0,0.25);
 
-            }
+    z-index: 9999;
 
-            to {
+    pointer-events: none;
+}
 
-                opacity: 0;
+/* SWORD CURSOR */
 
-                transform:
-                    scale(0);
+#sword-cursor {
+    position: fixed;
 
-            }
+    width: 30px;
+    height: 30px;
 
-        }
+    pointer-events: none;
 
+    z-index: 99999;
 
-        /* =====================================
-           CLIC LUMINEUX
-           ===================================== */
+    transform:
+        translate(-3px, -3px)
+        rotate(-35deg);
+}
 
-        .click-effect {
+#sword-cursor::before {
+    content: "";
 
-            position: fixed;
+    position: absolute;
 
-            width: 12px;
-            height: 12px;
+    width: 4px;
+    height: 25px;
 
-            border-radius: 50%;
+    background: linear-gradient(
+        to bottom,
+        white,
+        #aaa
+    );
 
-            pointer-events: none;
+    left: 13px;
+    top: 0;
 
-            z-index: 999997;
+    border-radius: 4px;
 
-            border:
-                2px solid white;
+    box-shadow:
+        0 0 8px rgba(255,255,255,0.7);
+}
 
-            box-shadow:
-                0 0 10px white,
-                0 0 25px #4da6ff,
-                0 0 50px #4da6ff;
+#sword-cursor::after {
+    content: "";
 
-            animation:
-                clickExplosion .65s ease-out forwards;
+    position: absolute;
 
-        }
+    width: 18px;
+    height: 4px;
 
+    background: #c9a227;
 
-        @keyframes clickExplosion {
+    left: 6px;
+    top: 22px;
 
-            0% {
+    border-radius: 5px;
 
-                opacity: 1;
+    box-shadow:
+        0 0 6px rgba(201,162,39,0.6);
+}
 
-                transform:
-                    translate(-50%,-50%)
-                    scale(.2);
+/* TRAIL */
 
-            }
+.trail {
+    position: fixed;
 
-            100% {
+    width: 5px;
+    height: 5px;
 
-                opacity: 0;
+    border-radius: 50%;
 
-                transform:
-                    translate(-50%,-50%)
-                    scale(7);
+    background: rgba(255,255,255,0.7);
 
-            }
+    pointer-events: none;
 
-        }
+    z-index: 9998;
 
+    animation: trailFade 0.5s linear forwards;
+}
 
-        /* =====================================
-           PROFIL
-           ===================================== */
+@keyframes trailFade {
+    from {
+        opacity: 0.8;
+        transform: scale(1);
+    }
 
-        .profil {
+    to {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
 
-            position: relative;
+/* CLICK EXPLOSION */
 
-            z-index: 5;
+.click-particle {
+    position: fixed;
 
-            width:
-                min(92vw, 460px);
+    width: 6px;
+    height: 6px;
 
-            min-height: 100vh;
+    background: white;
 
-            margin: auto;
+    border-radius: 50%;
 
-            display: flex;
+    pointer-events: none;
 
-            flex-direction: column;
+    z-index: 9997;
 
-            align-items: center;
+    animation: explode 0.6s ease-out forwards;
+}
 
-            justify-content: center;
+@keyframes explode {
+    to {
+        opacity: 0;
 
-            text-align: center;
+        transform:
+            translate(
+                var(--x),
+                var(--y)
+            )
+            scale(0);
+    }
+}
 
-            animation:
-                apparition 1s ease;
+/* MOBILE */
 
-        }
+@media (max-width: 600px) {
 
+    .profile {
+        width: 88vw;
 
-        .photo-container {
+        padding: 28px 18px;
+    }
 
-            position: relative;
+    .photo-profil {
+        width: 95px;
+        height: 95px;
+    }
 
-            width: 150px;
-            height: 150px;
+    h1 {
+        font-size: 25px;
+    }
 
-            margin-bottom: 20px;
-
-        }
-
-
-        .photo-container::before {
-
-            content: "";
-
-            position: absolute;
-
-            inset: -25px;
-
-            border-radius: 50%;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(100,180,255,.45),
-                    transparent 70%
-                );
-
-            filter: blur(20px);
-
-            animation:
-                halo 3s infinite ease-in-out;
-
-        }
-
-
-        .photo-profil {
-
-            position: relative;
-
-            width: 150px;
-            height: 150px;
-
-            object-fit: cover;
-
-            border-radius: 50%;
-
-            border:
-                3px solid white;
-
-            box-shadow:
-                0 0 20px rgba(0,0,0,.9),
-                0 0 45px rgba(100,180,255,.35);
-
-            transition:
-                transform .35s ease,
-                box-shadow .35s ease;
-
-        }
-
-
-        .photo-profil:hover {
-
-            transform:
-                scale(1.08)
-                rotate(2deg);
-
-            box-shadow:
-                0 0 25px white,
-                0 0 70px rgba(70,170,255,.75);
-
-        }
-
-
-        h1 {
-
-            margin: 0;
-
-            font-size: 46px;
-
-            letter-spacing: 4px;
-
-            text-shadow:
-                0 0 15px rgba(255,255,255,.3),
-                0 5px 25px black;
-
-            transition:
-                transform .3s ease;
-
-        }
-
-
-        h1:hover {
-
-            transform:
-                scale(1.06);
-
-        }
-
-
-        /* =====================================
-           STATUT
-           ===================================== */
-
-        .activite {
-
-            margin-top: 14px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-            font-size: 15px;
-
-            font-weight: bold;
-
-        }
-
-
-        .point {
-
-            width: 9px;
-            height: 9px;
-
-            border-radius: 50%;
-
-            background: #777;
-
-            animation:
-                pulse 1.7s infinite;
-
-        }
-
-
-        /* =====================================
-           BADGES
-           ===================================== */
-
-        .badges {
-
-            display: flex;
-
-            justify-content: center;
-
-            flex-wrap: wrap;
-
-            gap: 8px;
-
-            margin-top: 14px;
-
-        }
-
-
-        .badge {
-
-            padding:
-                6px 10px;
-
-            border-radius: 999px;
-
-            font-size: 11px;
-
-            font-weight: bold;
-
-            color: rgba(255,255,255,.85);
-
-            background:
-                rgba(10,10,10,.55);
-
-            border:
-                1px solid rgba(255,255,255,.14);
-
-            backdrop-filter:
-                blur(12px);
-
-            box-shadow:
-                inset 0 1px 0
-                rgba(255,255,255,.08);
-
-            transition:
-                transform .2s ease,
-                background .2s ease;
-
-        }
-
-
-        .badge:hover {
-
-            transform:
-                translateY(-3px)
-                scale(1.04);
-
-            background:
-                rgba(255,255,255,.12);
-
-        }
-
-
-        /* =====================================
-           CARTE ACTIVITÉ
-           ===================================== */
-
-        .jeu-card {
-
-            width: 100%;
-
-            margin-top: 18px;
-
-            padding: 15px;
-
-            display: none;
-
-            align-items: center;
-
-            gap: 13px;
-
-            text-align: left;
-
-            border-radius: 18px;
-
-            background:
-                rgba(8,8,8,.60);
-
-            border:
-                1px solid
-                rgba(255,255,255,.14);
-
-            backdrop-filter:
-                blur(20px);
-
-            box-shadow:
-                0 20px 50px
-                rgba(0,0,0,.4);
-
-            opacity: 0;
-
-            transform:
-                translateY(12px)
-                scale(.97);
-
-            transition:
-                .35s ease;
-
-        }
-
-
-        .jeu-card.visible {
-
-            display: flex;
-
-            opacity: 1;
-
-            transform:
-                translateY(0)
-                scale(1);
-
-        }
-
-
-        .jeu-icone {
-
-            width: 58px;
-            height: 58px;
-
-            flex-shrink: 0;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 14px;
-
-            font-size: 26px;
-
-            background:
-                rgba(255,255,255,.08);
-
-            border:
-                1px solid
-                rgba(255,255,255,.12);
-
-        }
-
-
-        .jeu-infos {
-
-            min-width: 0;
-
-        }
-
-
-        .jeu-label {
-
-            font-size: 10px;
-
-            letter-spacing: 1.5px;
-
-            color:
-                rgba(255,255,255,.45);
-
-        }
-
-
-        .jeu-nom {
-
-            margin-top: 3px;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
-        }
-
-
-        .jeu-details {
-
-            margin-top: 3px;
-
-            font-size: 13px;
-
-            color:
-                rgba(255,255,255,.7);
-
-            white-space: nowrap;
-
-            overflow: hidden;
-
-            text-overflow: ellipsis;
-
-        }
-
-
-        .jeu-timing {
-
-            margin-top: 4px;
-
-            font-size: 11px;
-
-            color:
-                rgba(255,255,255,.4);
-
-        }
-
-
-        /* =====================================
-           VUES
-           ===================================== */
-
-        .views {
-
-            margin-top: 13px;
-
-            padding:
-                6px 11px;
-
-            border-radius: 999px;
-
-            font-size: 11px;
-
-            color:
-                rgba(255,255,255,.55);
-
-            background:
-                rgba(0,0,0,.4);
-
-            border:
-                1px solid
-                rgba(255,255,255,.1);
-
-            backdrop-filter:
-                blur(10px);
-
-        }
-
-
-        /* =====================================
-           SON
-           ===================================== */
-
-        .sound-button {
-
-            position: fixed;
-
-            right: 25px;
-            bottom: 25px;
-
-            width: 58px;
-            height: 58px;
-
-            border-radius: 50%;
-
-            border:
-                1px solid
-                rgba(255,255,255,.2);
-
-            background:
-                rgba(10,10,10,.6);
-
-            color: white;
-
-            font-size: 22px;
-
-            cursor: none;
-
-            z-index: 20;
-
-            backdrop-filter:
-                blur(14px);
-
-            transition:
-                transform .2s ease;
-
-        }
-
-
-        .sound-button:hover {
-
-            transform:
-                scale(1.1);
-
-        }
-
-
-        /* =====================================
-           ANIMATIONS
-           ===================================== */
-
-        @keyframes apparition {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(25px)
-                    scale(.96);
-
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    translateY(0)
-                    scale(1);
-
-            }
-
-        }
-
-
-        @keyframes halo {
-
-            0%,100% {
-
-                transform:
-                    scale(.9);
-
-                opacity: .4;
-
-            }
-
-            50% {
-
-                transform:
-                    scale(1.08);
-
-                opacity: .8;
-
-            }
-
-        }
-
-
-        @keyframes pulse {
-
-            0%,100% {
-
-                transform:
-                    scale(1);
-
-            }
-
-            50% {
-
-                transform:
-                    scale(1.35);
-
-            }
-
-        }
-
-
-        /* =====================================
-           MOBILE
-           ===================================== */
-
-        @media(max-width:600px) {
-
-            body {
-
-                cursor: auto;
-
-            }
-
-
-            #sword-cursor,
-            .cursor-trail {
-
-                display: none;
-
-            }
-
-
-            .profil {
-
-                width: 88vw;
-
-            }
-
-
-            .photo-container,
-            .photo-profil {
-
-                width: 115px;
-                height: 115px;
-
-            }
-
-
-            h1 {
-
-                font-size: 33px;
-
-            }
-
-
-            .sound-button {
-
-                cursor: pointer;
-
-                width: 52px;
-                height: 52px;
-
-                right: 18px;
-                bottom: 18px;
-
-            }
-
-        }
-
-    </style>
-
+    #views {
+        left: 12px;
+        bottom: 12px;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
+<!-- VIDEO -->
 
-    <!-- =====================================
-         PARTICULES
-         ===================================== -->
+<video
+    id="background-video"
+    autoplay
+    muted
+    loop
+    playsinline
+>
+    <source src="clip.mp4" type="video/mp4">
+</video>
 
-    <canvas id="particles"></canvas>
+<div class="overlay"></div>
 
+<canvas id="particles"></canvas>
 
-    <!-- =====================================
-         CURSEUR ÉPÉE
-         ===================================== -->
+<!-- CURSEUR -->
 
-    <div id="sword-cursor">
+<div id="sword-cursor"></div>
 
-        <div class="sword-blade"></div>
+<!-- SON -->
 
-        <div class="sword-guard"></div>
+<button class="sound-button" id="soundButton">
+    🔇
+</button>
 
-        <div class="sword-handle"></div>
+<!-- PROFIL -->
 
-        <div class="sword-pommel"></div>
+<div class="profile">
+
+    <img
+        src="profil.png"
+        alt="Photo de profil"
+        class="photo-profil"
+    >
+
+    <h1>brufor</h1>
+
+    <div class="status">
+
+        <span
+            class="status-dot"
+            id="statusDot"
+        ></span>
+
+        <span id="statusText">
+            Chargement...
+        </span>
 
     </div>
 
+    <div
+        class="activity"
+        id="activity"
+    >
 
-    <!-- =====================================
-         VIDÉO
-         ===================================== -->
-
-    <video
-        class="video-background"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto">
-
-        <source
-            src="clip.mp4"
-            type="video/mp4">
-
-    </video>
-
-
-    <div class="overlay"></div>
-
-
-    <!-- =====================================
-         PROFIL
-         ===================================== -->
-
-    <main class="profil">
-
-
-        <div class="photo-container">
-
-            <img
-                class="photo-profil"
-                src="profil.png"
-                alt="Photo de profil">
-
+        <div class="activity-title">
+            Activité Discord
         </div>
-
-
-        <h1>¹²³⁴⁵</h1>
-
-
-        <div class="activite">
-
-            <span
-                class="point"
-                id="point">
-            </span>
-
-            <span id="statut">
-                CHARGEMENT...
-            </span>
-
-        </div>
-
-
-        <!-- BADGES -->
 
         <div
-            class="badges"
-            id="badges">
-
-            <span class="badge">
-                ✦ PROFILE
-            </span>
-
-            <span class="badge">
-                ⚡ ACTIVE
-            </span>
-
+            class="activity-name"
+            id="activityName"
+        >
         </div>
-
-
-        <!-- ACTIVITÉ -->
 
         <div
-            class="jeu-card"
-            id="jeuCard">
-
-            <div
-                class="jeu-icone"
-                id="jeuIcone">
-
-                🎮
-
-            </div>
-
-
-            <div class="jeu-infos">
-
-                <div class="jeu-label">
-                    ACTIVITÉ DISCORD
-                </div>
-
-
-                <div
-                    class="jeu-nom"
-                    id="jeuNom">
-                </div>
-
-
-                <div
-                    class="jeu-details"
-                    id="jeuDetails">
-                </div>
-
-
-                <div
-                    class="jeu-timing"
-                    id="jeuTiming">
-                </div>
-
-            </div>
-
+            class="activity-time"
+            id="activityTime"
+        >
         </div>
 
+    </div>
 
-        <!-- VUES -->
+    <div
+        class="badges"
+        id="badges"
+    >
 
-        <div
-            class="views"
-            id="views">
-
-            👁 0 vues
-
+        <div class="badge">
+            ✨ Profile
         </div>
 
+        <div class="badge">
+            🎮 Gamer
+        </div>
 
-    </main>
+        <div class="badge">
+            💻 Developer
+        </div>
 
+    </div>
 
-    <!-- SON -->
+</div>
 
-    <button
-        class="sound-button"
-        id="soundButton">
+<!-- COMPTEUR DE VUES -->
 
-        🔇
+<div id="views">
+    👁 0 vues
+</div>
 
-    </button>
+<script>
 
+/* =========================
+   DISCORD LANYARD
+========================= */
 
-    <script>
+const DISCORD_ID = "TON_ID_DISCORD";
 
+const couleurs = {
+    online: "#00ff88",
+    idle: "#ffaa00",
+    dnd: "#ff4444",
+    offline: "#777777"
+};
 
-        /* =====================================
-           ID DISCORD
-           ===================================== */
+const nomsStatut = {
+    online: "EN LIGNE",
+    idle: "ABSENT",
+    dnd: "NE PAS DÉRANGER",
+    offline: "HORS LIGNE"
+};
 
-        /*
-           ⚠️ GARDE TON VRAI ID DISCORD
-           ENTRE LES GUILLEMETS.
-        */
+let activityStart = null;
 
-        const DISCORD_ID =
-            "1303798212540239923";
+async function updateDiscord() {
 
+    try {
 
-        /* =====================================
-           CURSEUR
-           ===================================== */
-
-        const sword =
-            document.getElementById(
-                "sword-cursor"
-            );
-
-
-        let mouseX = 0;
-        let mouseY = 0;
-
-        let cursorX = 0;
-        let cursorY = 0;
-
-
-        document.addEventListener(
-            "mousemove",
-            function(event) {
-
-                mouseX =
-                    event.clientX;
-
-                mouseY =
-                    event.clientY;
-
-            }
+        const response = await fetch(
+            `https://api.lanyard.rest/v1/users/${DISCORD_ID}`
         );
 
+        const result = await response.json();
 
-        function animateCursor() {
-
-            cursorX +=
-                (mouseX - cursorX)
-                * 0.35;
-
-            cursorY +=
-                (mouseY - cursorY)
-                * 0.35;
-
-
-            sword.style.left =
-                cursorX + "px";
-
-            sword.style.top =
-                cursorY + "px";
-
-
-            requestAnimationFrame(
-                animateCursor
-            );
-
+        if (!result.success) {
+            return;
         }
 
+        const data = result.data;
 
-        animateCursor();
+        const status =
+            data.discord_status || "offline";
 
+        const statusDot =
+            document.getElementById("statusDot");
 
-        /* =====================================
-           TRAÎNÉE
-           ===================================== */
+        const statusText =
+            document.getElementById("statusText");
 
-        let lastX = 0;
-        let lastY = 0;
+        statusDot.style.background =
+            couleurs[status];
 
+        statusDot.style.color =
+            couleurs[status];
 
-        document.addEventListener(
-            "mousemove",
-            function(event) {
+        statusText.textContent =
+            nomsStatut[status];
 
-                const distance =
-                    Math.hypot(
-                        event.clientX - lastX,
-                        event.clientY - lastY
-                    );
+        /* ACTIVITY */
 
+        const activityBox =
+            document.getElementById("activity");
 
-                if (distance > 22) {
+        const activityName =
+            document.getElementById("activityName");
 
-                    const trail =
-                        document.createElement(
-                            "div"
-                        );
+        const activityTime =
+            document.getElementById("activityTime");
 
-
-                    trail.className =
-                        "cursor-trail";
-
-
-                    trail.style.left =
-                        event.clientX + "px";
-
-
-                    trail.style.top =
-                        event.clientY + "px";
-
-
-                    document.body.appendChild(
-                        trail
-                    );
-
-
-                    setTimeout(
-                        function() {
-
-                            trail.remove();
-
-                        },
-                        500
-                    );
-
-
-                    lastX =
-                        event.clientX;
-
-                    lastY =
-                        event.clientY;
-
-                }
-
-            }
-        );
-
-
-        /* =====================================
-           EFFET CLIC
-           ===================================== */
-
-        document.addEventListener(
-            "click",
-            function(event) {
-
-                const effect =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                effect.className =
-                    "click-effect";
-
-
-                effect.style.left =
-                    event.clientX + "px";
-
-
-                effect.style.top =
-                    event.clientY + "px";
-
-
-                document.body.appendChild(
-                    effect
-                );
-
-
-                setTimeout(
-                    function() {
-
-                        effect.remove();
-
-                    },
-                    700
-                );
-
-            }
-        );
-
-
-        /* =====================================
-           PARTICULES
-           ===================================== */
-
-        const canvas =
-            document.getElementById(
-                "particles"
+        const activity =
+            data.activities?.find(
+                a => a.type === 0
             );
 
+        if (activity) {
 
-        const ctx =
-            canvas.getContext("2d");
+            activityBox.style.display =
+                "block";
 
+            activityName.textContent =
+                activity.name;
 
-        let particles = [];
+            if (
+                activity.timestamps &&
+                activity.timestamps.start
+            ) {
 
+                activityStart =
+                    activity.timestamps.start;
 
-        function resizeCanvas() {
+                updateActivityTime();
 
-            canvas.width =
-                window.innerWidth;
+            } else {
 
-            canvas.height =
-                window.innerHeight;
+                activityTime.textContent =
+                    "";
+            }
 
+        } else {
+
+            activityBox.style.display =
+                "none";
+
+            activityStart = null;
         }
 
+    } catch (error) {
 
-        resizeCanvas();
-
-
-        window.addEventListener(
-            "resize",
-            resizeCanvas
+        console.log(
+            "Erreur Discord:",
+            error
         );
 
+    }
+
+}
+
+/* TEMPS ACTIVITÉ */
+
+function updateActivityTime() {
+
+    if (!activityStart) {
+        return;
+    }
+
+    const now =
+        Date.now();
+
+    const diff =
+        now - activityStart;
+
+    if (diff < 0) {
+        return;
+    }
+
+    const seconds =
+        Math.floor(diff / 1000);
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const hours =
+        Math.floor(minutes / 60);
+
+    let text;
+
+    if (hours > 0) {
+
+        text =
+            `Depuis ${hours}h ${minutes % 60}min`;
+
+    } else {
+
+        text =
+            `Depuis ${minutes}min`;
+    }
+
+    document.getElementById(
+        "activityTime"
+    ).textContent = text;
+}
+
+updateDiscord();
+
+setInterval(
+    updateDiscord,
+    10000
+);
+
+setInterval(
+    updateActivityTime,
+    30000
+);
+
+
+/* =========================
+   SON
+========================= */
+
+const video =
+    document.getElementById(
+        "background-video"
+    );
+
+const soundButton =
+    document.getElementById(
+        "soundButton"
+    );
+
+soundButton.addEventListener(
+    "click",
+    () => {
+
+        video.muted =
+            !video.muted;
+
+        soundButton.textContent =
+            video.muted
+                ? "🔇"
+                : "🔊";
+    }
+);
+
+
+/* =========================
+   PARTICULES
+========================= */
+
+const canvas =
+    document.getElementById(
+        "particles"
+    );
+
+const ctx =
+    canvas.getContext("2d");
+
+let particles = [];
+
+function resizeCanvas() {
+
+    canvas.width =
+        window.innerWidth;
+
+    canvas.height =
+        window.innerHeight;
+}
+
+resizeCanvas();
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+for (
+    let i = 0;
+    i < 70;
+    i++
+) {
+
+    particles.push({
+
+        x:
+            Math.random()
+            * window.innerWidth,
+
+        y:
+            Math.random()
+            * window.innerHeight,
+
+        size:
+            Math.random() * 2 + 0.5,
+
+        speed:
+            Math.random() * 0.5 + 0.1,
+
+        opacity:
+            Math.random() * 0.5 + 0.1
+    });
+}
+
+function drawParticles() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    particles.forEach(
+        particle => {
+
+            particle.y -=
+                particle.speed;
+
+            if (
+                particle.y < 0
+            ) {
+
+                particle.y =
+                    canvas.height;
+            }
+
+            ctx.beginPath();
+
+            ctx.arc(
+                particle.x,
+                particle.y,
+                particle.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `rgba(255,255,255,${particle.opacity})`;
+
+            ctx.fill();
+        }
+    );
+
+    requestAnimationFrame(
+        drawParticles
+    );
+}
+
+drawParticles();
+
+
+/* =========================
+   CURSEUR
+========================= */
+
+const sword =
+    document.getElementById(
+        "sword-cursor"
+    );
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        sword.style.left =
+            event.clientX + "px";
+
+        sword.style.top =
+            event.clientY + "px";
+
+        const trail =
+            document.createElement(
+                "div"
+            );
+
+        trail.className =
+            "trail";
+
+        trail.style.left =
+            event.clientX + "px";
+
+        trail.style.top =
+            event.clientY + "px";
+
+        document.body.appendChild(
+            trail
+        );
+
+        setTimeout(
+            () => trail.remove(),
+            500
+        );
+    }
+);
+
+
+/* =========================
+   CLICK EFFECT
+========================= */
+
+document.addEventListener(
+    "click",
+    event => {
 
         for (
             let i = 0;
-            i < 55;
+            i < 10;
             i++
         ) {
 
-            particles.push({
-
-                x:
-                    Math.random()
-                    * window.innerWidth,
-
-                y:
-                    Math.random()
-                    * window.innerHeight,
-
-                size:
-                    Math.random() * 2 + 0.5,
-
-                speed:
-                    Math.random() * 0.35 + 0.1,
-
-                opacity:
-                    Math.random() * 0.5 + 0.15
-
-            });
-
-        }
-
-
-        function animateParticles() {
-
-            ctx.clearRect(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-
-            particles.forEach(
-                function(p) {
-
-                    p.y -= p.speed;
-
-
-                    if (p.y < -10) {
-
-                        p.y =
-                            canvas.height + 10;
-
-                    }
-
-
-                    ctx.beginPath();
-
-
-                    ctx.arc(
-                        p.x,
-                        p.y,
-                        p.size,
-                        0,
-                        Math.PI * 2
-                    );
-
-
-                    ctx.fillStyle =
-                        `rgba(
-                            255,
-                            255,
-                            255,
-                            ${p.opacity}
-                        )`;
-
-
-                    ctx.fill();
-
-                }
-            );
-
-
-            requestAnimationFrame(
-                animateParticles
-            );
-
-        }
-
-
-        animateParticles();
-
-
-        /* =====================================
-           DISCORD
-           ===================================== */
-
-        const couleurs = {
-
-            online: "#00ff88",
-
-            idle: "#ffaa00",
-
-            dnd: "#ff4444",
-
-            offline: "#777777"
-
-        };
-
-
-        const nomsStatut = {
-
-            online: "EN LIGNE",
-
-            idle: "ABSENT",
-
-            dnd: "NE PAS DÉRANGER",
-
-            offline: "HORS LIGNE"
-
-        };
-
-
-        let debutActivite = null;
-
-
-        async function chargerDiscord() {
-
-            try {
-
-                const response =
-                    await fetch(
-                        "https://api.lanyard.rest/v1/users/"
-                        + DISCORD_ID
-                    );
-
-
-                const result =
-                    await response.json();
-
-
-                if (!result.success) {
-
-                    throw new Error(
-                        "Lanyard indisponible"
-                    );
-
-                }
-
-
-                const data =
-                    result.data;
-
-
-                const statut =
-                    data.discord_status
-                    || "offline";
-
-
-                const couleur =
-                    couleurs[statut]
-                    || couleurs.offline;
-
-
-                const statutElement =
-                    document.getElementById(
-                        "statut"
-                    );
-
-
-                const point =
-                    document.getElementById(
-                        "point"
-                    );
-
-
-                statutElement.textContent =
-                    nomsStatut[statut];
-
-
-                statutElement.style.color =
-                    couleur;
-
-
-                point.style.background =
-                    couleur;
-
-
-                point.style.boxShadow =
-                    "0 0 8px "
-                    + couleur
-                    + ", 0 0 18px "
-                    + couleur;
-
-
-                /* =================================
-                   ACTIVITÉ
-                   ================================= */
-
-                const activities =
-                    data.activities || [];
-
-
-                const activity =
-                    activities.find(
-                        function(a) {
-
-                            return a.type === 0;
-
-                        }
-                    );
-
-
-                const card =
-                    document.getElementById(
-                        "jeuCard"
-                    );
-
-
-                if (!activity) {
-
-                    card.classList.remove(
-                        "visible"
-                    );
-
-                    debutActivite =
-                        null;
-
-                }
-                else {
-
-                    document.getElementById(
-                        "jeuNom"
-                    ).textContent =
-                        activity.name
-                        || "Activité";
-
-
-                    document.getElementById(
-                        "jeuDetails"
-                    ).textContent =
-                        activity.details
-                        || activity.state
-                        || "En cours";
-
-
-                    if (
-                        activity.timestamps
-                        &&
-                        activity.timestamps.start
-                    ) {
-
-                        debutActivite =
-                            activity.timestamps.start;
-
-                    }
-                    else {
-
-                        debutActivite =
-                            null;
-
-                    }
-
-
-                    card.classList.add(
-                        "visible"
-                    );
-
-                }
-
-
-                /* =================================
-                   BADGES
-                   ================================= */
-
-                const badges =
-                    document.getElementById(
-                        "badges"
-                    );
-
-
-                badges.innerHTML = "";
-
-
-                badges.innerHTML +=
-                    `<span class="badge">
-                        🟢 DISCORD
-                    </span>`;
-
-
-                if (statut === "online") {
-
-                    badges.innerHTML +=
-                        `<span class="badge">
-                            ⚡ ONLINE
-                        </span>`;
-
-                }
-
-
-                if (activity) {
-
-                    badges.innerHTML +=
-                        `<span class="badge">
-                            🎮 GAMING
-                        </span>`;
-
-                }
-
-
-                badges.innerHTML +=
-                    `<span class="badge">
-                        ✦ PROFILE
-                    </span>`;
-
-            }
-            catch (error) {
-
-                console.error(error);
-
-
-                document.getElementById(
-                    "statut"
-                ).textContent =
-                    "HORS LIGNE";
-
-
-                document.getElementById(
-                    "statut"
-                ).style.color =
-                    couleurs.offline;
-
-
-                document.getElementById(
-                    "point"
-                ).style.background =
-                    couleurs.offline;
-
-            }
-
-        }
-
-
-        /* =====================================
-           TIMER ACTIVITÉ
-           ===================================== */
-
-        function afficherTemps() {
-
-            const timing =
-                document.getElementById(
-                    "jeuTiming"
+            const particle =
+                document.createElement(
+                    "div"
                 );
 
+            particle.className =
+                "click-particle";
 
-            if (!debutActivite) {
+            particle.style.left =
+                event.clientX + "px";
 
-                timing.textContent =
-                    "";
+            particle.style.top =
+                event.clientY + "px";
 
-                return;
+            const angle =
+                Math.random()
+                * Math.PI
+                * 2;
 
-            }
+            const distance =
+                Math.random()
+                * 70 + 20;
 
+            particle.style.setProperty(
+                "--x",
+                `${Math.cos(angle) * distance}px`
+            );
 
-            const total =
-                Math.floor(
-                    (
-                        Date.now()
-                        -
-                        debutActivite
-                    ) / 1000
-                );
+            particle.style.setProperty(
+                "--y",
+                `${Math.sin(angle) * distance}px`
+            );
 
+            document.body.appendChild(
+                particle
+            );
 
-            const heures =
-                Math.floor(
-                    total / 3600
-                );
-
-
-            const minutes =
-                Math.floor(
-                    (total % 3600) / 60
-                );
-
-
-            const secondes =
-                total % 60;
-
-
-            if (heures > 0) {
-
-                timing.textContent =
-                    "Depuis "
-                    + heures
-                    + "h "
-                    + minutes
-                    + "min";
-
-            }
-            else {
-
-                timing.textContent =
-                    "Depuis "
-                    + minutes
-                        .toString()
-                        .padStart(2,"0")
-                    + "min "
-                    + secondes
-                        .toString()
-                        .padStart(2,"0")
-                    + "s";
-
-            }
-
+            setTimeout(
+                () => particle.remove(),
+                600
+            );
         }
+    }
+);
 
 
-        /* =====================================
-           COMPTEUR DE VUES
-           ===================================== */
+/* =========================
+   COMPTEUR DE VUES
+========================= */
 
-        let vues =
-            parseInt(
-                localStorage.getItem(
-                    "brufor_profile_views"
-                )
-            );
+let vues =
+    parseInt(
+        localStorage.getItem(
+            "brufor_profile_views"
+        )
+    );
 
+if (isNaN(vues)) {
 
-        if (isNaN(vues)) {
+    vues = 0;
+}
 
-            vues = 0;
+vues++;
 
-        }
+localStorage.setItem(
+    "brufor_profile_views",
+    vues
+);
 
+document.getElementById(
+    "views"
+).textContent =
+    "👁 " + vues + " vues";
 
-        vues++;
-
-
-        localStorage.setItem(
-            "brufor_profile_views",
-            vues
-        );
-
-
-        document.getElementById(
-            "views"
-        ).textContent =
-            "👁 "
-            + vues
-            + " vues";
-
-
-        /* =====================================
-           SON
-           ===================================== */
-
-        const video =
-            document.querySelector(
-                ".video-background"
-            );
-
-
-        const soundButton =
-            document.getElementById(
-                "soundButton"
-            );
-
-
-        soundButton.addEventListener(
-            "click",
-            function() {
-
-                video.muted =
-                    !video.muted;
-
-
-                soundButton.textContent =
-                    video.muted
-                        ? "🔇"
-                        : "🔊";
-
-            }
-        );
-
-
-        /* =====================================
-           LANCEMENT
-           ===================================== */
-
-        chargerDiscord();
-
-
-        setInterval(
-            chargerDiscord,
-            10000
-        );
-
-
-        setInterval(
-            afficherTemps,
-            1000
-        );
-
-    </script>
+</script>
 
 </body>
-
 </html>
 ```
